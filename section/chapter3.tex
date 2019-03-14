@@ -1,7 +1,7 @@
 \chapter{Prediksi dengan Random Forest}
 
 Untuk pratikum saati ini menggunakan buku \textit{Python Artificial Intelligence Projects for Beginners}\cite{eckroth2018python}. Dengan praktek menggunakan python 3 dan editor anaconda dan library python scikit-learn.
-Dataset ada di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners .
+Kode program ada di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners .
 Tujuan pembelajaran pada pertemuan pertama antara lain:
 \begin{enumerate}
 \item
@@ -14,11 +14,12 @@ Memahami Confusion Matrix.
 Tugas dengan cara dikumpulkan dengan pull request ke github dengan menggunakan latex pada repo yang dibuat oleh asisten riset. Kode program menggunakan input listing ditaruh di folder src ekstensi .py dan dipanggil ke latex dengan input listings. Tulisan dan kode tidak boleh plagiat, menggunakan bahasa indonesia yang sesuai dengan gaya bahasa buku teks.
 
 \section{Teori}
-Random Forest adalah hasil voting dari beberapa decission tree yang masing-masing memegang atribut yang berbeda. Jadi setiap decission tree spesifik terhadap atribut tersebut yang merupakan bagian kecil dari keseluruhan atribut di data set. Hindari RF jika atribut terlalu sedikit untuk membentuk beberapa tree. Pada praktek kali ini mengggunakan dataset spesies burung yang diambil dari situs (http://www.vision.caltech.edu/visipedia/CUB-200-2011.html). Didalmnya terdapat 12.000 foto dari 200 spesies yang berbeda. Yang akan kita pakai untuk RF hanya atribut dari burunynya saja seperti ukuran, bentuk dan warna. Data tersebut diberi label secara manual oleh manusia dengan memanfaatkan jasa dari Amazon's Mechanical Turk.
+Random Forest adalah hasil voting dari beberapa decission tree yang masing-masing memegang atribut yang berbeda. Jadi setiap decission tree spesifik terhadap atribut tersebut yang merupakan bagian kecil dari keseluruhan atribut di data set. Hindari RF jika atribut terlalu sedikit untuk membentuk beberapa tree. Pada praktek kali ini mengggunakan dataset spesies burung yang diambil dari situs 
+(http://www.vision.caltech.edu/visipedia/CUB-200-2011.html). Didalamnya terdapat 12.000 foto dari 200 spesies yang berbeda. Yang akan kita pakai untuk RF hanya atribut dari burunynya saja seperti ukuran, bentuk dan warna. Data tersebut diberi label secara manual oleh manusia dengan memanfaatkan jasa dari Amazon's Mechanical Turk.
 
 \subsection{Random Forest}
 Pertama dataset kita baca terlebih dahulu.
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:fungsisederhana}]
+\begin{lstlisting}[caption=Membaca data file txt,label={lst:fungsisederhana}]
 import pandas as pd
 
 # some lines have too many fields (?), so skip bad lines
@@ -49,7 +50,7 @@ imgatt2.shape
 
 
 Sekarang kita akan meload jawabannya yang berisi apakah burung itu termasuk dalam spesies yang mana. Dua kolomnya adalah imgid dan label. Dan melakukan pivot yang mana imgid menjadi index yang artinya unik perintahnya ada di listing \ref{lst:3.6}. Lalu kita cek kembali datanya. 
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.6}]
+\begin{lstlisting}[caption=membaca dataset label file txt,label={lst:3.6}]
 imglabels = pd.read_csv("data/CUB_200_2011/image_class_labels.txt", 
                         sep=' ', header=None, names=['imgid', 'label'])
 
@@ -61,24 +62,24 @@ imglabels.shape
 \end{lstlisting}
 
 Karena isinya sama kita bisa melakukan join antara dua data. Sehingga kita akan mendapatkan data ciri dan data jawabannya atau labelnya sehingga bisa dikatekorikan supervised learning. maka perintah untuk menggabungkan kedua data dan kemudian kita melakukan pemisahan antara data set untuk training dan test dengan perintah di listing \ref{lst:3.7}.
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.7}]
+\begin{lstlisting}[caption=Menggabungkan field dari dua file terpisah,label={lst:3.7}]
 df = imgatt2.join(imglabels)
 df = df.sample(frac=1)
 \end{lstlisting}
 
 Kemudian drop label yang didepan, dan gunakan label yang paling belakang yang baru di join dengan perintah listing \ref{lst:3.8}.
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.8}]
+\begin{lstlisting}[caption=Memisahkan dan memilih label,label={lst:3.8}]
 df_att = df.iloc[:, :312]
 df_label = df.iloc[:, 312:]
 \end{lstlisting}
 Kita bisa mengecek isinya dengan perintah listing \ref{lst:3.9}.
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.9}]
+\begin{lstlisting}[caption=Melihat isi masing masing data frame,label={lst:3.9}]
 df_att.head()
 df_label.head()
 \end{lstlisting}
 
 Kita bagi menjadi dua bagian, 8000 row pertama sebagai data training sisanya sebagai data testing dengan perintah listing \ref{lst:3.10}.
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.10}]
+\begin{lstlisting}[caption=Pembagian data training dan test,label={lst:3.10}]
 df_train_att = df_att[:8000]
 df_train_label = df_label[:8000]
 df_test_att = df_att[8000:]
@@ -89,29 +90,29 @@ df_test_label = df_test_label['label']
 \end{lstlisting}
 
 Kita panggil kelas RandomForestClassifier. max features diartikan sebagai berapa banyak kolom pada setiap tree dengan perintah listing \ref{lst:3.11}.
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.11}]
+\begin{lstlisting}[caption=Instansiasi kelas Random Forest,label={lst:3.11}]
 from sklearn.ensemble import RandomForestClassifier
 clf = RandomForestClassifier(max_features=50, random_state=0, n_estimators=100)
 
 \end{lstlisting}
 Kemudian lakukan fit untuk membangun random forest yang sudah ditentukan dengan maksimum fitur sebanya 50 untuk perpohonnya dengan perintah listing \ref{lst:3.12}.
 
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.12}]
+\begin{lstlisting}[caption=Fitting random forest dengan dataset training,label={lst:3.12}]
 clf.fit(df_train_att, df_train_label)
 \end{lstlisting}
 Hasilnya bisa kita dapatkan dengan perintah predict dengan perintah listing \ref{lst:3.13}.
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.13}]
+\begin{lstlisting}[caption=Melihat Hasil prediksi,label={lst:3.13}]
 print(clf.predict(df_train_att.head()))
 \end{lstlisting}
 
 Untuk besaran akurasinya dengan perintah listing \ref{lst:3.14}
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.14}]
+\begin{lstlisting}[caption=Score perolehan dari klasifikasi,label={lst:3.14}]
 clf.score(df_test_att, df_test_label)
 \end{lstlisting}
 
 \subsection{Confusion Matrix}
 Dari RF kita coba petakan ke dalam Confusion Matrix dan lihat hasilnya dengan perintah listing \ref{lst:3.15}.
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.15}]
+\begin{lstlisting}[caption=Membuat Confusion Matrix,label={lst:3.15}]
 from sklearn.metrics import confusion_matrix
 pred_labels = clf.predict(df_test_att)
 cm = confusion_matrix(df_test_label, pred_labels)
@@ -120,7 +121,7 @@ cm
 \end{lstlisting}
 
 Kemudian kita plot dengan perintah
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.16}]
+\begin{lstlisting}[caption=Plotting Confusion Matrix,label={lst:3.16}]
 import matplotlib.pyplot as plt
 import itertools
 def plot_confusion_matrix(cm, classes,
@@ -160,7 +161,7 @@ def plot_confusion_matrix(cm, classes,
 \end{lstlisting}
 
  Agar plot sumbunya sesuai dengan nama datanya maka kita set dengan perintah
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.17}]
+\begin{lstlisting}[caption=Membaca file classes.txt,label={lst:3.17}]
 birds = pd.read_csv("data/CUB_200_2011/classes.txt",
                     sep='\s+', header=None, usecols=[1], names=['birdname'])
 birds = birds['birdname']
@@ -169,7 +170,7 @@ birds
 \end{lstlisting}
 
 Lalu kita plot
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.18}]
+\begin{lstlisting}[caption=Plot hasil perubahan label,label={lst:3.18}]
 import numpy as np
 np.set_printoptions(precision=2)
 plt.figure(figsize=(60,60), dpi=300)
@@ -181,14 +182,14 @@ plt.show()
 
 \subsection{Mencoba dengan metode Decission Tree dan SVM}
 Kita coba menggunakan Decission tree 
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.19}]
+\begin{lstlisting}[caption=Mencoba klasifikasi dengan decission tree dengan dataset yang sama,label={lst:3.19}]
 from sklearn import tree
 clftree = tree.DecisionTreeClassifier()
 clftree.fit(df_train_att, df_train_label)
 clftree.score(df_test_att, df_test_label)
 \end{lstlisting}
 Kita coba menggunakan SVM
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.20}]
+\begin{lstlisting}[caption=Mencoba klasifikasi dengan SVM dengan dataset yang sama,label={lst:3.20}]
 from sklearn import svm
 clfsvm = svm.SVC()
 clfsvm.fit(df_train_att, df_train_label)
@@ -197,28 +198,28 @@ clfsvm.score(df_test_att, df_test_label)
 
 \subsection{Pengecekan Cross Validation}
 Pengeceken Cross Validation untuk random forest
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.21}]
+\begin{lstlisting}[caption=Hasil Cross Validation random forest,label={lst:3.21}]
 from sklearn.model_selection import cross_val_score
 scores = cross_val_score(clf, df_train_att, df_train_label, cv=5)
 # show average score and +/- two standard deviations away (covering 95% of scores)
 print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 \end{lstlisting}
 untuk decission tree
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.22}]
+\begin{lstlisting}[caption=Hasil Cross Validation Decission Tree,label={lst:3.22}]
 scorestree = cross_val_score(clftree, df_train_att, df_train_label, cv=5)
 print("Accuracy: %0.2f (+/- %0.2f)" % (scorestree.mean(), scorestree.std() * 2))
 \end{lstlisting}
 untuk SVM
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.23}]
+\begin{lstlisting}[caption=Hasil Cross Validation SVM,label={lst:3.23}]
 scoressvm = cross_val_score(clfsvm, df_train_att, df_train_label, cv=5)
 print("Accuracy: %0.2f (+/- %0.2f)" % (scoressvm.mean(), scoressvm.std() * 2))
 \end{lstlisting}
 
 
 
-\subsection{Mengatahui komponen komponen informasi}
+\subsection{Pengamatan komponen informasi}
 Untuk mengetahui berapa banyak tree yang dibuat, berapa banyak atribut yang dipakai dan informasi lainnya menggunakan kode
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.24}]
+\begin{lstlisting}[caption=Melakukan Pengamatan komponen informasi,label={lst:3.24}]
 max_features_opts = range(5, 50, 5)
 n_estimators_opts = range(10, 200, 20)
 rf_params = np.empty((len(max_features_opts)*len(n_estimators_opts),4), float)
@@ -236,7 +237,7 @@ for max_features in max_features_opts:
 
 \end{lstlisting}
 Dan kita bisa melakukan plot informasi ini dengan kode
-\begin{lstlisting}[caption=Fungsi Sederhana,label={lst:3.25}]
+\begin{lstlisting}[caption=Plot Komponen informasi agar bisa dibaca,label={lst:3.25}]
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
@@ -263,162 +264,48 @@ Praktek teori penunjang yang dikerjakan(nilai 5 per nomor, untuk hari pertama) :
 \item
 Jelaskan apa itu random forest, sertakan gambar ilustrasi buatan sendiri.
 \item
-Jelaskan cara membaca dataset dan artikan makna setiap file dan isi filenya.
+Jelaskan cara membaca dataset kasus dan artikan makna setiap file dan isi field masing masing file.
 \item
-Jelaskan apa itu evaluasi dan akurasi dari buku dan disertai ilustrasi contoh dengan gambar sendiri
+Jelaskan apa itu cross validation
 \item
-Jelaskan bagaimana cara membuat dan membaca confusion matrix, buat confusion matrix buatan sendiri.
+Jelaskan apa arti score 44\% pada random forest, 27\% pada decission tree dan 29\%dari SVM.
 \item
-Jelaskan bagaimana K-fold cross validation bekerja dengan gambar ilustrasi contoh buatan sendiri.
+Jelaskan bagaimana cara membaca confusion matriks dan contohnya memakai gambar atau ilustrasi sendiri.
 \item
-Jelaskan apa itu decision tree dengan gambar ilustrasi contoh buatan sendiri.
-\item
-Jelaskan apa itu information gain dan entropi dengan gambar ilustrasi buatan sendiri.
+Jelaskan apa itu voting pada random forest disertai dengan ilustrasi gambar sendiri.
 \end{enumerate}
 
-\section{scikit-learn}
-Dataset ambil di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners folder Chapter01.
-Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengganti semua nama variabel dari kode di bawah ini dengan nama-nama makanan (NPM mod 3=0), kota (NPM mod 3=1), buah (NPM mod 3=2), . Jalankan satu per satu kode tersebut di spyder dengan menggunakan textit{Run current cell}. Kemudian Jelaskan dengan menggunakan bahasa yang mudah dimengerti dan bebas plagiat dan wajib skrinsut dari komputer sendiri masing masing nomor di bawah ini(nilai 5 masing masing pada hari kedua).
+\section{Praktek Program}
+Tugas anda adalah,praktekkan dan jelaskan dengan menggunakan bahasa yang mudah dimengerti dan bebas plagiat dan wajib skrinsut dari komputer sendiri masing masing nomor di bawah ini(nilai 5 masing masing pada hari kedua).
 
 \begin{enumerate}
-
-\item
-\begin{verbatim}
-	# load dataset (student mat pakenya)
-	import pandas as pd
-	d = pd.read_csv('student-mat.csv', sep=';')
-	len(d)
-\end{verbatim}
-\item
-\begin{verbatim}
-	# generate binary label (pass/fail) based on G1+G2+G3 
-	# (test grades, each 0-20 pts); threshold for passing is sum>=30
-	d['pass'] = d.apply(lambda row: 1 if (row['G1']+row['G2']+row['G3']) 
-											>= 35 else 0, axis=1)
-	d = d.drop(['G1', 'G2', 'G3'], axis=1)
-	d.head()
-\end{verbatim}
-\item
-\begin{verbatim}
-	# use one-hot encoding on categorical columns
-	d = pd.get_dummies(d, columns=['sex', 'school', 'address', 
-									'famsize', 
-									'Pstatus', 'Mjob', 'Fjob', 
-	                               'reason', 'guardian', 'schoolsup', 
-								   'famsup', 'paid', 'activities',
-	                               'nursery', 'higher', 'internet', 
-									'romantic'])
-	d.head()
-\end{verbatim}
-\item
-\begin{verbatim}
-	# shuffle rows
-	d = d.sample(frac=1)
-	# split training and testing data
-	d_train = d[:500]
-	d_test = d[500:]
-
-	d_train_att = d_train.drop(['pass'], axis=1)
-	d_train_pass = d_train['pass']
-
-	d_test_att = d_test.drop(['pass'], axis=1)
-	d_test_pass = d_test['pass']
-
-	d_att = d.drop(['pass'], axis=1)
-	d_pass = d['pass']
-
-	# number of passing students in whole dataset:
-	import numpy as np
-	print("Passing: %d out of %d (%.2f%%)" % (np.sum(d_pass), len(d_pass), 
-	       100*float(np.sum(d_pass)) / len(d_pass)))
-\end{verbatim}
-\item 
-\begin{verbatim}
-	# fit a decision tree
-	from sklearn import tree
-	t = tree.DecisionTreeClassifier(criterion="entropy", max_depth=5)
-	t = t.fit(d_train_att, d_train_pass)
-\end{verbatim}
-\item
-\begin{verbatim}
-	# visualize tree
-	import graphviz
-	dot_data = tree.export_graphviz(t, out_file=None, label="all", 
-									impurity=False, proportion=True,
-	                                feature_names=list(d_train_att), 
-									class_names=["fail", "pass"], 
-	                                filled=True, rounded=True)
-	graph = graphviz.Source(dot_data)
-	graph
-\end{verbatim}
-\item
-\begin{verbatim}
-	# save tree
-	tree.export_graphviz(t, out_file="student-performance.dot", 
-						 label="all", impurity=False, 
-						 proportion=True,
-	                     feature_names=list(d_train_att), 
-	                     class_names=["fail", "pass"], 
-	                     filled=True, rounded=True)
-\end{verbatim}
-\item
-\begin{verbatim}
-	t.score(d_test_att, d_test_pass)
-\end{verbatim}
-\item
-\begin{verbatim}
-	from sklearn.model_selection import cross_val_score
-	scores = cross_val_score(t, d_att, d_pass, cv=5)
-	# show average score and +/- two standard deviations away 
-	#(covering 95% of scores)
-	print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
-\end{verbatim}
-\item 
-\begin{verbatim}
-	for max_depth in range(1, 20):
-	    t = tree.DecisionTreeClassifier(criterion="entropy", 
-			max_depth=max_depth)
-	    scores = cross_val_score(t, d_att, d_pass, cv=5)
-	    print("Max depth: %d, Accuracy: %0.2f (+/- %0.2f)" % 
-				(max_depth, scores.mean(), scores.std() * 2)
-			 )
-\end{verbatim}
-\item
-\begin{verbatim}
-	depth_acc = np.empty((19,3), float)
-	i = 0
-	for max_depth in range(1, 20):
-	    t = tree.DecisionTreeClassifier(criterion="entropy", 
-			max_depth=max_depth)
-	    scores = cross_val_score(t, d_att, d_pass, cv=5)
-	    depth_acc[i,0] = max_depth
-	    depth_acc[i,1] = scores.mean()
-	    depth_acc[i,2] = scores.std() * 2
-	    i += 1
-
-	depth_acc
-\end{verbatim}
-\item 
-\begin{verbatim}
-	import matplotlib.pyplot as plt
-	fig, ax = plt.subplots()
-	ax.errorbar(depth_acc[:,0], depth_acc[:,1], yerr=depth_acc[:,2])
-	plt.show()
-\end{verbatim}
-
+\item buat aplikasi sederhana menggunakan pandas dan jelaskan arti setiap baris kode yang dibuat(harus beda dengan teman sekelas)
+\item buat aplikasi sederhana menggunakan numpy dan jelaskan arti dari setiap baris kode yang dibuat(harus beda dengan teman sekelas)
+\item buat aplikasi sederhana menggunakan matplotlib dan jelaskan arti dari setiap baris kode(harus beda dengan teman sekelas)
+\item jalankan program klasifikasi Random Fores pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+\item jalankan program confusion matrix pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+\item jalankan program klasifikasi SVM dan Decission Tree pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+\item jalankan program cross validaiton pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+\item jalankan program pengamatan komponen informasi pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
 \end{enumerate}
 
 
 \section{Penanganan Error}
-Dari percobaan yang dilakukan di atas, error yang kita dapatkan di dokumentasikan dan di selesaikan(nilai 5 hari kedua):
+Dari percobaan yang dilakukan di atas, error yang kita dapatkan di dokumentasikan dan di selesaikan(nilai 5 per error yang ditangani. Untuk hari kedua):
 
 \begin{enumerate}
-	\item
-skrinsut error
-	\item
-Tuliskan kode eror dan jenis errornya
-	\item
-Solusi pemecahan masalah error tersebut
-
+	\item skrinsut error
+	\item Tuliskan kode eror dan jenis errornya
+	\item Solusi pemecahan masalah error tersebut
 \end{enumerate}
+
+\section{Presentasi Tugas}
+Pada pertemuan ketiga ini, diadakan tiga penilaiain yaitu penilaian untuk tugas mingguan seperti sebelumnya dengan nilai maksimal 100. Kemudian dalam satu minggu kedepan maksimal sebelum waktu mata kuliah kecerdasan buatan. Ada presentasi tugas bab ini dan bab sebelumnya dengan nilai presentasi yang terpisah masing-masing 100. Jadi ada tiga komponen penilaiain pada pertemuan ini yaitu :
+\begin{enumerate}
+	\item tugas minggu hari ini dan besok (maks 100). pada chapter ini
+	\item presentasi decission tree (maks 100). Mempraktekkan kode python dan menjelaskan cara kerjanya.
+	\item presentasi Random Forest (maks 100).Mempraktekkan kode python dan menjelaskan cara kerjanya.
+\end{enumerate}
+Waktu presentasi pada jam kerja di IRC. Kriteria penilaian presentasi sangat sederhana, jika presenter tidak bisa menjawab pertanyaan asisten maka nilai nol. Jika semua pertanyaan bisa dijawab maka nilai 100. Presentasi bisa diulang apabila nilai nol sampai bisa mendapatkan nilai 100 dalam waktu satu minggu kedepan.
+
 
