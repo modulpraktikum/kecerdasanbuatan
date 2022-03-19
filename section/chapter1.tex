@@ -58,29 +58,76 @@ Praktek teori penunjang yang dikerjakan :
 \section{Instalasi}
 Membuka https://scikit-learn.org/stable/tutorial/basic/tutorial.html. Dengan menggunakan bahasa yang mudah dimengerti dan bebas plagiat. 
 Dan wajib skrinsut dari komputer sendiri.
+\newline Link Livestreaming: \href{https://youtu.be/sJbFyIBI_Jk}{Klik Disini}
 \begin{enumerate}
 \item
 Instalasi library scikit dari anaconda, mencoba kompilasi dan uji coba ambil contoh kode dan lihat variabel explorer[hari ke 1](10)
+\begin{figure}[!htbp]
+    \centering
+	\caption{Instalasi Sklearn Melalui Anaconda Prompt}
+   	\includegraphics[scale=0.4]{figures/chapter 1/instalasi/1/cmdInstalasiSklearn.PNG}
+	\caption{Variable Explorer}
+	\includegraphics[scale=0.4]{figures/chapter 1/instalasi/1/variableExplorer.PNG}
+\end{figure}
 \item
 Mencoba Loading an example dataset, menjelaskan maksud dari tulisan tersebut dan mengartikan per baris[hari ke 1](10)
+\begin{figure}[!htbp]
+    \centering
+   	\includegraphics[scale=0.4]{figures/chapter 1/LoadDataset/SourceCode.PNG}
+	\caption{Source Code Loading an example dataset}
+	\includegraphics[scale=0.4]{figures/chapter 1/LoadDataset/OutputExampleDatasets.PNG}
+	\caption{Output Example Dataset}
+	\includegraphics[scale=0.3]{figures/chapter 1/LoadDataset/VariableExplorerDataset.PNG}
+	\includegraphics[scale=0.3]{figures/chapter 1/LoadDataset/4.PNG}
+	\vspace{0.5cm}
+	\includegraphics[scale=0.3]{figures/chapter 1/LoadDataset/5.PNG}
+	\caption{Variable Explorer dari output dataset}
+\end{figure}
 \item
 Mencoba Learning and predicting, menjelaskan maksud dari tulisan tersebut dan mengartikan per baris[hari ke 2](10)
+\begin{figure}[!htbp]
+    \centering
+   	\includegraphics[scale=0.5]{figures/chapter 1/3/1.PNG}
+	\caption{Source Code Learning and Predicting}
+	\includegraphics[scale=0.5]{figures/chapter 1/3/2.PNG}
+	\caption{Output Learning and Predicting}
+\end{figure}
 \item
 mencoba Model persistence, menjelaskan maksud dari tulisan tersebut dan mengartikan per baris[hari ke 2](10)
+\begin{figure}[!htbp]
+    \centering
+   	\includegraphics[scale=0.5]{figures/chapter 1/4/1.PNG}
+	\caption{Source Code Model Persistence}
+	\includegraphics[scale=0.5]{figures/chapter 1/4/2.PNG}
+	\caption{Output Menggunakan Pickle}
+	\includegraphics[scale=0.5]{figures/chapter 1/4/3.PNG}
+	\caption{Output Menggunakan Joblib}
+\end{figure}
+\newpage
 \item 
 Mencoba Conventions, menjelaskan maksud dari tulisan tersebut dan mengartikan per baris[hari ke 2](10)
+	\begin{figure}[!htbp]
+	    \centering
+	   	\includegraphics[scale=0.5]{figures/chapter 1/5/1.PNG}
+		\caption{Source Code Convention}
+		\includegraphics[scale=0.5]{figures/chapter 1/5/2.PNG}
+		\caption{Output Source Code}
+	\end{figure}
 \end{enumerate}
 
-
+\newpage
 \section{Penanganan Error}
 Dari percobaan yang dilakukan di atas, apabila mendapatkan error maka:
-
 \begin{enumerate}
 	\item
 	skrinsut error[hari ke 2](10)
-	\item
-Tuliskan kode eror dan jenis errornya [hari ke 2](10)
-	\item
-Solusi pemecahan masalah error tersebut[hari ke 2](10)
-
+	\begin{figure}[!htbp]
+	    \centering
+	   	\includegraphics[scale=0.4]{figures/chapter 1/error/1.PNG}
+		\caption{Error Could Not Install Packages due to an OSError Acces Is Denied}
+	\end{figure}
+	\item Tuliskan Kode error dan Jenis Errornya [hari ke 2](10)
+	\newline pip install -U scikit-learn (jenis error Could Not Install Packages due to an OSError Acces Is Denied)
+	\item Solusi pemecahan masalah error tersebut[hari ke 2](10)
+	\newline tambahkan --user pada command install pip " pip install -U scikit-learn --user "
 \end{enumerate}
