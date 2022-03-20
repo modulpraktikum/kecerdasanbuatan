@@ -1,54 +1,40 @@
 \chapter{Mengenal Kecerdasan Buatan dan Scikit-Learn}
-Buku umum teori lengkap yang digunakan memiliki judul\textit{Artificial intelligence: a modern approach}\cite{russell2016artificial}.  
-Untuk pratikum sebelum UTS menggunakan buku \textit{Python Artificial Intelligence Projects for Beginners}\cite{eckroth2018python}. Buku pelengkap penunjang penggunaan python menggunakan buku \textit{Python code for Artificial Intelligence: Foundations of Computational Agents}\cite{poole2017python}.
-Dengan praktek menggunakan python 3 dan editor anaconda dan library python scikit-learn.
-Tujuan pembelajaran pada pertemuan pertama antara lain:
-\begin{enumerate}
-\item
-Mengerti definisi kecerdasan buatan, sejarah kecerdasan buatan, perkembangan dan penggunaan di perusahaan
-\item
-Memahami cara instalasi dan pemakaian sci-kit learn
-\item
-Memahami cara penggunaan variabel explorer di spyder
-\end{enumerate}
-Tugas dengan cara dikumpulkan dengan pull request ke github dengan menggunakan latex pada repo yang dibuat oleh asisten riset.
+\section{Kecerdasan Buatan}
+    \subsection{Definisi Kecerdasan Buatan}
+    Artificial Inteligence (AI)  atau dalam bahasa Indonesia berarti  kecerdasan buatan merupakan sebuah cabang dalam bisnis sains komputer yang mengkaji tentang bagaimana sebuah komputer dapat memiliki kemampuan mirip dengan kemampuan yang dimiliki manusia. Kecerdasan buatan juga dapat didefinisikan sebagai simulasi dari kecerdsan yang dimiliki oleh manusia dan dimodelkan dalam bentuk mesin yang di program agar dapat berpikir layaknya manusia. Dengan kata lain kecerdasan buatan atau AI merupakan sistem  yang dapat melakukan suatu pekerjaan yang umumnya memerlukan kecerdasan manusia untuk dapat menyelesaikan pekerjaan tersebut. 
 
-\section{Teori}
-Praktek teori penunjang yang dikerjakan :
-\begin{enumerate}
-\item
-Buat Resume Definisi, Sejarah dan perkembangan Kecerdasan Buatan, dengan bahasa yang mudah dipahami dan dimengerti. Buatan sendiri bebas plagiat[hari ke 1](10)
-\item
-Buat Resume mengenai definisi supervised learning, klasifikasi, regresi dan unsupervised learning. Data set, training set dan testing set.[hari ke 1](10)
-\end{enumerate}
+    Dalam perkembangannya, AI atau kecerdasan buatan sangat membantu manusia dan dapat ditemui di dalam kehidupan sehari – hari seperti Asisten Virtual Google yang digunakan untuk memudahkan user untuk menemukan berbagai hal di dalam perangkat dan hampir semua perangkat komputer menerapkan kecerdasan buatan sehingga semakin canggih kemampuan komputer  dalam memperbarui pengetahuannya.
 
-\section{Instalasi}
-Membuka https://scikit-learn.org/stable/tutorial/basic/tutorial.html. Dengan menggunakan bahasa yang mudah dimengerti dan bebas plagiat. 
-Dan wajib skrinsut dari komputer sendiri.
-\begin{enumerate}
-\item
-Instalasi library scikit dari anaconda, mencoba kompilasi dan uji coba ambil contoh kode dan lihat variabel explorer[hari ke 1](10)
-\item
-Mencoba Loading an example dataset, menjelaskan maksud dari tulisan tersebut dan mengartikan per baris[hari ke 1](10)
-\item
-Mencoba Learning and predicting, menjelaskan maksud dari tulisan tersebut dan mengartikan per baris[hari ke 2](10)
-\item
-mencoba Model persistence, menjelaskan maksud dari tulisan tersebut dan mengartikan per baris[hari ke 2](10)
-\item 
-Mencoba Conventions, menjelaskan maksud dari tulisan tersebut dan mengartikan per baris[hari ke 2](10)
-\end{enumerate}
+    \subsection{Sejarah Kecerdasan Buatan}
+    Artificial intelligence bermula sejak kemunculan komputer sekitar tahun 1940 dan 1950. Pada masa ini perhatian di fokuskan pada kemampuan sebuah komputer untuk dapat mengerjakan sesuatu yang dapat dilakukan manusia. Pada tahun 1943, McMulloh dan Pitts mengusulkan sebuah model matematis dengan nama perceptron dari neuron di dalam otak. Mereka dapat menunjukkan bagaimana sebuah neuron menjadi aktif dan neuron tersebut mampu belajar memberikan aksi yang berbeda terhadap waktu dari input yang diberikan. Selanjutnya pada tahun 1950, di dalam paper Alan Turing yang berjudul Computing Machineri and Intelligence mendiskusikan syarat sebuah mesin dianggap cerdas dan beranggapan bahwa mesin yang bisa berperilaku seperti manusia dapat dianggap cerdas.
 
+    Pada tahun 1956. John McCarthy dari Massacuhetts Institute of Technology (MIT) menyelenggarakan sebuah konferensi Dartmouth yang mengumpulkan ahli komputer dan mempertemukan para pendiri dalam AI dengan nama The Dartmouth summer research project on artificial intelligence dimana John McCarthy mengusulkan definisi AI yaitu AI merupakan cabang dari ilmu komputer yang berfokus pada pengembangan komputer untuk dapat memiliki kemampuan dan berperilaku seperti manusia. Konferensi tersebut dianggap sebagai awal mula kelahiran kecerdasan buatan.
 
-\section{Penanganan Error}
-Dari percobaan yang dilakukan di atas, apabila mendapatkan error maka:
+    \section{Scikit-Learn}
+    \subsection{Supervised Learning}
+    Supervised Learning merupakan teknik belajar model dimana sebuah model akan diberi data dan setiap data tersebut akan diberi label. Dalam supervised learning terdapat data training yang menjadi tempat semua data dimana data training berupa input data atau target data yang diinginkan kemudian dilatih untuk dapat melakukan prediksi  dalam menjawab target data. Data tersebut akan diuji dan dibandingkan dengan prediksi pada data test. Supervised learning juga dapat didefinisikan sebagai operasi machine learning yang digunakan untuk data dimana ada pemetaan yang tepat antara data input dan output. Kumpulan data akan diberi label yang berarti algoritma akan mengidentifikasi secara eksplisit dan akan melakukan prediksi atau klasifikasi yang sesuai. 
 
-\begin{enumerate}
-	\item
-	skrinsut error[hari ke 2](10)
-	\item
-Tuliskan kode eror dan jenis errornya [hari ke 2](10)
-	\item
-Solusi pemecahan masalah error tersebut[hari ke 2](10)
+    Contoh Penerapan Supervised Learning adalah aplikasi pengenalan wajah atau Jaringan Syaraf Tiruan (JST). Convolutional Neural Networks (CNN) adalah jenis JST yang digunakan untuk mengidentifikasi wajah. Jika ada kesamaan antara input atau masukkan nya di dalam database maka akan dihasilkan sebuah output.
 
-\end{enumerate}
+    Algoritma supervised learning digunakan untuk menyelesaikan persoalan yang terkait dengan:
+        \begin{enumerate}
+        \item Classification (klasifikasi)
+        \newline Classification (klasifikasi) merupakan teknik yang digunakan untuk mengklasifikasikan data yang belum berlabel atau mengelompokkan data berdasarkan ciri persamaan dan perbedaannya. Algoritma klasifikasi juga digunakan untuk memprediksi fitur kategori.
 
+        \item Regression (regresi)
+        \newline Regression (regresi) merupakan teknik untuk mengidentifikasi sebuah relasi serta hubungan diantara dua variable atau lebih.  Regresi digunakan untuk memprediksi nilai atau fitir kontinu. Pada regresi akan dilihat hubungan sebab dan akibat. Variable sebab biasanya dikenal dengan variabel independent (X) dan variable akibat biasanya dikenal dengan variabel dependent (Y).
+        \end{enumerate}
+
+    \subsection{Unsupervised Learning}
+    Unsupervised Learning merupakan operasi machine learning yang mempelajari sebuah pola data tanpa memerlukan target data. Unsupervised Learning hanya memerlukan data input dan menemukan pola serta insight penting dari data. Proses ini biasa disebut dengan data mining. Pada Unsupervised Learning data tidak memiliki label secara eksplisit dan mampu belajar dari data dengan menemukan pola implisit. Unsupervised Learning tidak menggunakan data training dan hanya bergantung pada data test sehingga tidak dapat dilakukan evaluasi pada model. Unsupervised Learning dievaluasi secara subjektif untuk dapat mengetahui bahwa prediksi yang dilakukan sudah sesuai. 
+
+    Unsupervised Learning merupakan salah satu tipe dari algoritma machine learning yang digunakan untuk menarik kesimpulan dari sebuah data set dan mempelajari data berdasarkan kedekatannya atau disebut dengan clustering. Clustering merupakan sebuah metode yang digunakan untuk pengelompokan secara otomatis dengan membagi kumpulan data menjadi beberapa kelompok sesuai kesamaannya.
+
+    \subsection{Data Set}
+    Dataset merupakan objek yang merepresentasikan data dan relasi yang ada di dalam memory. Struktur dari Dataset hampir sama dengan database, namun dataset berisi koleksi data table dan data relation. Dataset akan tetap berada di dalam memori dan data yang ada di dalamnya dapat dimanipulasi dan di update tanpa bergantung pada database asalnya.
+
+    \subsection{Training Set}
+    Training set merupakan set yang digunakan oleh algoritma klasifikasi. Training set juga merupakan bagian dari dataset yang digunakan untuk membuat prediksi dan menjalankan fungsi dari algoritma machine learning. Training set digunakan untuk algoritma klasifikasi seperti decision tree, Bayesian, neural network dan svm untuk dapat membentuk sebuah model classifier. Model ini akan merepresentasikan pengetahuan yang digunakan untuk prediksi kelas data baru yang belum ada. 
+
+    \subsection{Testing Set}
+    Testing set merupakan bagian dari dataset yang akan di tes untuk dapat melihat ke akuratan atau performanya dengan kata lain, testing set digunakan untuk menguji peforma serta kebenaran dari model yang bersangkutan. Testing set akan mengukur sejauh mana classifier berhasil melakukan klasifikasi dengan benar. 
