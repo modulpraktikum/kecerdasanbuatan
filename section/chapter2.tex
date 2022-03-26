@@ -24,16 +24,56 @@ Binary classification adalah proses mengklasifikasi yang ouputnya dibagi menjadi
 
 \item
 Jelaskan apa itu supervised learning dan unsupervised learning dan clustering dengan ilustrasi gambar sendiri.
+\par
+    \textit{Supervised Learning} sebuah pembelajaran yang ditentukan berdasarkan penggunaan traning set yang berlabel.
+\par
+    \textit{Unsupervised Learning} sebuah pembelajaran yang ditentukan berdasarkan penggunaan traning set yang tidak berlabel. 
+
 \item
 Jelaskan apa itu evaluasi dan akurasi dari buku dan disertai ilustrasi contoh dengan gambar sendiri
+\par
+    Evaluasi adalah tentang mengukur sebarapa baik nilai performa dari suatu model. Dan akurasi adalah tigkat ketepatan yang benar dari suatu model.
+    
 \item
-Jelaskan bagaimana cara membuat dan membaca confusion matrix, buat confusion matrix buatan sendiri.
+Jelaskan bagaimana cara membuat dan membaca confusion matrix, buat confusion matrix buatan sendiri.\\
+Cara membuat dan membaca confusion matrix :
+\begin{enumerate}
+    \item Tentukan studi kasus nya
+    \item Buat ke dalam Decision Tree
+    \item Siapkan data testing 
+    \item Kemudian cari value dari variabel misal nya a,b,c,d
+    \item Dan cari value dari recall, precision, accuracy dan juga error state
+\end{enumerate}
+
 \item
 Jelaskan bagaimana K-fold cross validation bekerja dengan gambar ilustrasi contoh buatan sendiri.
+Cara kerja dari K-fold cross validation :
+\begin{enumerate}
+    \item Total instace dibagi menjadi n bagian
+    \item Fold pertama merupakan bagian pertama yang menjadi Testing data dan sisanya menjadi training data
+    \item Hitung akurasinya dengan menggunakan persamaan
+    \item Fold ke dua merupakan bagian kedua yang menjadi testing data dan sisanya mendjadi training data
+    \item Hitung lagi akurasi nya dan juga seterus nya pada fold yang terakhir
+    \item Dan terakhir adalah hitung rata-rata akurasi nya
+\end{enumerate}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/K-fold.JPG}
+	\caption{Ilutrasi K-fold cross validation}
+\end{figure}
+
+
 \item
-Jelaskan apa itu decision tree dengan gambar ilustrasi contoh buatan sendiri.
+Jelaskan apa itu decision tree dengan gambar ilustrasi contoh buatan sendiri.\\
+Decision Tree adalah suatu metode yang digunakan untuk mengambil keputusan
+
+
 \item
-Jelaskan apa itu information gain dan entropi dengan gambar ilustrasi buatan sendiri.
+Jelaskan apa itu information gain dan entropi dengan gambar ilustrasi buatan sendiri.\\
+information gain adalah kumpulan informasi yang diperolah dari variable acak. Dan Entropi adalah tingkat keacakan pada informasi yang sedang diproses.\\
+
+
+
 \end{enumerate}
 
 \section{scikit-learn}
@@ -42,7 +82,7 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 
 \begin{enumerate}
 
-\item load dataset stude
+\item load dataset student-mat.csv
 \begin{figure}[!htbp]
     \centering
     \includegraphics[scale=0.5]{figures/importchap2.JPG}
