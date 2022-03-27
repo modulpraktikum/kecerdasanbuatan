@@ -20,12 +20,67 @@ Praktek teori penunjang yang dikerjakan(nilai 5 per nomor, untuk hari pertama) :
 \begin{enumerate}
 \item
 Jelaskan apa itu binary classification dilengkapi ilustrasi gambar sendiri
-\item
+\begin{itemize}
+ \newpage 
+\item Binary Classification merupakan bentuk klasifikasi untuk proses memprediksi variable kategori dimana output dibatasi untuk kedua kelas.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figures/chapter 2/1.png}
+    \caption{Binary Classification using dataset breast cancer}
+    \label{fig:mesh1}
+\end{figure}
+\end{itemize}
+\newpage \item
 Jelaskan apa itu supervised learning dan unsupervised learning dan clustering dengan ilustrasi gambar sendiri.
+\begin{itemize}
+\item supervised learning merupakan Machine Learning model yang mempelajari data dengan label atau target dimana evaluasi model tersebut akan berdasarkan
+target. contoh: pengenalan jenis bunga berdasarkan ukuran kelopak
+dan warna kelopak. seperti pada Figure 2.2 merupakan hasil predict dan ciri dari sample dataset iris yang didapatkan dari algoritma SVC untuk memprediksi target dari suatu objek berdasarkan beberapa ciri seperti sepal length, sepal width, petal width dan sepal length, akan diprediksi menjadi salah satu dari beberapa target name seperti setosa, versicolor dan virginica.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/2.png}
+    \caption{Contoh Hasil dari predict dari supervised learning menggunakan SVC}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/3.png}
+    \caption{Source Code fitting dan predict menggunakan dataset iris pada model SVC}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+\item Unsupervised learning adalah salah satu tipe algoritma machine learning yang digunakan untuk menarik kesimpulan dari dataset. Metode ini hanya akan mempelajari suatu data berdasarkan kedekatannya saja atau yang biasa disebut dengan clustering. Metode unsupervised learning yang paling umum adalah analisis cluster, yang digunakan pada analisa data untuk mencari pola-pola tersembunyi atau pengelompokan dalam data.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{figures/chapter 2/4.png}
+    \caption{Binary Classification using dataset breast cancer}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{figures/chapter 2/5.png}
+    \caption{Binary Classification using dataset breast cancer}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{figures/chapter 2/6.png}
+    \caption{Binary Classification using dataset breast cancer}
+    \label{fig:mesh1}
+\end{figure}
+\end{itemize}
 \item
 Jelaskan apa itu evaluasi dan akurasi dari buku dan disertai ilustrasi contoh dengan gambar sendiri
+	\begin{itemize}
+		\item akurasi dapat didefinisikan sebagai pendekatan pengukuran berdasarkan standar atau nilai sebenarnya yaitu, sistem navigasi yang sangat akurat akan memeberikan nilai pengukuran yang sangat kuat dengan nilai standar
+		\item evaluasi dapat didefinisikan sebagai bagaimana mengukur seberapa baik nilai performa dari suatu model.
+	\end{itemize}
 \item
 Jelaskan bagaimana cara membuat dan membaca confusion matrix, buat confusion matrix buatan sendiri.
+	\begin{itemize}
+		\item akurasi dapat didefinisikan sebagai pendekatan pengukuran berdasarkan standar atau nilai sebenarnya yaitu, sistem navigasi yang sangat akurat akan memeberikan nilai pengukuran yang sangat kuat dengan nilai standar
+		\item evaluasi dapat didefinisikan sebagai bagaimana mengukur seberapa baik nilai performa dari suatu model.
+	\end{itemize}
 \item
 Jelaskan bagaimana K-fold cross validation bekerja dengan gambar ilustrasi contoh buatan sendiri.
 \item
@@ -47,6 +102,18 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	d = pd.read_csv('student-mat.csv', sep=';')
 	len(d)
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/1.png}
+    \caption{Source Code Task 1}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/2.png}
+    \caption{Output Task 1}
+    \label{fig:mesh1}
+\end{figure}
 \item
 \begin{verbatim}
 	# generate binary label (pass/fail) based on G1+G2+G3 
@@ -56,6 +123,18 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	d = d.drop(['G1', 'G2', 'G3'], axis=1)
 	d.head()
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/3.png}
+    \caption{Source Code Task 2}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/4.png}
+    \caption{Output Task 2}
+    \label{fig:mesh1}
+\end{figure}
 \item
 \begin{verbatim}
 	# use one-hot encoding on categorical columns
@@ -68,6 +147,20 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 									'romantic'])
 	d.head()
 \end{verbatim}
+\newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/5.png}
+    \caption{Source Code Task 3}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/6.png}
+    \caption{Output Task 3}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
 \item
 \begin{verbatim}
 	# shuffle rows
@@ -90,6 +183,18 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	print("Passing: %d out of %d (%.2f%%)" % (np.sum(d_pass), len(d_pass), 
 	       100*float(np.sum(d_pass)) / len(d_pass)))
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/7.png}
+    \caption{Source Code Task 4}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/8.png}
+    \caption{Output Task 4}
+    \label{fig:mesh1}
+\end{figure}
 \item 
 \begin{verbatim}
 	# fit a decision tree
@@ -97,6 +202,18 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	t = tree.DecisionTreeClassifier(criterion="entropy", max_depth=5)
 	t = t.fit(d_train_att, d_train_pass)
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/9.png}
+    \caption{Source Code Task 5}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/10.png}
+    \caption{Output Task 5}
+    \label{fig:mesh1}
+\end{figure}
 \item
 \begin{verbatim}
 	# visualize tree
@@ -109,7 +226,19 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	graph = graphviz.Source(dot_data)
 	graph
 \end{verbatim}
-\item
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=1]{figures/chapter 2/sklearn/11.png}
+    \caption{Source Code Task 6}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/12.png}
+    \caption{Output Task 6}
+    \label{fig:mesh1}
+\end{figure}
+\newpage \item
 \begin{verbatim}
 	# save tree
 	tree.export_graphviz(t, out_file="student-performance.dot", 
@@ -119,10 +248,35 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	                     class_names=["fail", "pass"], 
 	                     filled=True, rounded=True)
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.8]{figures/chapter 2/sklearn/13.png}
+    \caption{Source Code Task 7}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.15]{figures/chapter 2/sklearn/14.png}
+    \caption{Output Task 7}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
 \item
 \begin{verbatim}
 	t.score(d_test_att, d_test_pass)
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=1]{figures/chapter 2/sklearn/15.png}
+    \caption{Source Code Task 8}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.7]{figures/chapter 2/sklearn/16.png}
+    \caption{Output Task 8}
+    \label{fig:mesh1}
+\end{figure}
 \item
 \begin{verbatim}
 	from sklearn.model_selection import cross_val_score
@@ -131,6 +285,19 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	#(covering 95% of scores)
 	print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.8]{figures/chapter 2/sklearn/17.png}
+    \caption{Source Code Task 9}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.8]{figures/chapter 2/sklearn/18.png}
+    \caption{Output Task 9}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
 \item 
 \begin{verbatim}
 	for max_depth in range(1, 20):
@@ -141,6 +308,18 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 				(max_depth, scores.mean(), scores.std() * 2)
 			 )
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/19.png}
+    \caption{Source Code Task 10}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/20.png}
+    \caption{Output Task 10}
+    \label{fig:mesh1}
+\end{figure}
 \item
 \begin{verbatim}
 	depth_acc = np.empty((19,3), float)
@@ -156,6 +335,19 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 
 	depth_acc
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/21.png}
+    \caption{Source Code Task 11}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/22.png}
+    \caption{Output Task 11}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
 \item 
 \begin{verbatim}
 	import matplotlib.pyplot as plt
@@ -163,6 +355,18 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	ax.errorbar(depth_acc[:,0], depth_acc[:,1], yerr=depth_acc[:,2])
 	plt.show()
 \end{verbatim}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/23.png}
+    \caption{Source Code Task 12}
+    \label{fig:mesh1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figures/chapter 2/sklearn/24.png}
+    \caption{Output Task 12}
+    \label{fig:mesh1}
+\end{figure}
 
 \end{enumerate}
 
