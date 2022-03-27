@@ -19,21 +19,64 @@ Tugas dengan cara dikumpulkan dengan pull request ke github dengan menggunakan l
 Praktek teori penunjang yang dikerjakan(nilai 5 per nomor, untuk hari pertama) :
 \begin{enumerate}
 \item
-Jelaskan apa itu binary classification dilengkapi ilustrasi gambar sendiri
+Jelaskan apa itu binary classification dilengkapi ilustrasi gambar sendiri.
+\newline Jawab:
+\newline Binary classification merupakan proses pengklasifikasian elemen-elemen himpunan berdasarkan aturan klasifikasi yang ouputnya dibagi menjadi 2 kelompok.
+
 \item
 Jelaskan apa itu supervised learning dan unsupervised learning dan clustering dengan ilustrasi gambar sendiri.
+\newline Jawab:
+\newline Supervised Learning merupakan sebuah pendekatan yang ditentukan berdasarkan penggunaan
+traning dataset yang berlabel/labeled dataset dan digunakan untuk melakukan klasifikasi data atau memprediksi hasil secara akurat.
+\newline Unsupervised Learning merupakan sebuah pendekatan yang ditentukan berdasarkan penggunaan
+traning dataset yang tidak berlabel dan digunakan untuk menganalisa serta mengelompokan kumpulan data yang tidak berlabel.
+\newline Clustering merupakan sebuah proses pengelompokan data ke dalam beberapa cluster yang dimana data-data di suatu cluster tersebut memiliki kemiripan.
+
 \item
-Jelaskan apa itu evaluasi dan akurasi dari buku dan disertai ilustrasi contoh dengan gambar sendiri
+Jelaskan apa itu evaluasi dan akurasi dari buku dan disertai ilustrasi contoh dengan gambar sendiri.
+\newline Jawab:
+\newline Evaluasi merupakan kegiatan untuk mengukur sebarapa baik nilai performa dari suatu
+model dengan cara mengukur akurasinya. 
+\newline Akurasi merupakan tigkat ketepatan yang diklasifikasikan dengan benar dari suatu model.
+
 \item
 Jelaskan bagaimana cara membuat dan membaca confusion matrix, buat confusion matrix buatan sendiri.
-\item
-Jelaskan bagaimana K-fold cross validation bekerja dengan gambar ilustrasi contoh buatan sendiri.
-\item
-Jelaskan apa itu decision tree dengan gambar ilustrasi contoh buatan sendiri.
-\item
-Jelaskan apa itu information gain dan entropi dengan gambar ilustrasi buatan sendiri.
+\newline Jawab:
+\newline Cara membuat dan membaca confusion matrix:
+\begin{enumerate}
+	\item Menentukan studi kasusnya.
+	\item Membuat ke dalam Decision Tree.
+	\item Menyiapkan data testing.
+	\item Mencari value dari variabel, misalnya yaitu a,b,c,d.
+	\item Mencari value dari recall, precision, accuracy, dan error state.
 \end{enumerate}
 
+\item
+Jelaskan bagaimana K-fold cross validation bekerja dengan gambar ilustrasi contoh buatan sendiri.
+\newline Jawab:
+\newline Cara kerja dari K-fold cross validation:
+\begin{enumerate}
+	\item Mengacak dataset secara random.
+	\item Membagi dataset tersebut kedalam k-group, yaitu sebagai test dataset dan sisanya sebagai training dataset.
+	\item Memasang model pada training set dan evaluasi pada test dataset.
+	\item Menyimpan skor evaluasi dan buang modelnya.
+	\item Meringkas keterampilan model menggunakan sampel skor menggunakan	model evaluasi.
+\end{enumerate}
+
+\item
+Jelaskan apa itu decision tree dengan gambar ilustrasi contoh buatan sendiri.
+\newline Jawab:
+\newline Decision Tree merupakan suatu metode yang digunakan untuk membatu dalam pengambilan keputusan dengan menggunakan model pohon.
+
+\item
+Jelaskan apa itu information gain dan entropi dengan gambar ilustrasi buatan sendiri.
+\newline Jawab:
+\newline Information gain merupakan kumpulan informasi yang didapatkan dari variable acak.
+\newline Entropi merupakan tingkat keacakan pada informasi yang diperloh dari information gain dan sedang diproses.
+
+\end{enumerate}
+
+\newpage
 \section{scikit-learn}
 Dataset ambil di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners folder Chapter01.
 Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengganti semua nama variabel dari kode di bawah ini dengan nama-nama makanan (NPM mod 3=0), kota (NPM mod 3=1), buah (NPM mod 3=2), . Jalankan satu per satu kode tersebut di spyder dengan menggunakan textit{Run current cell}. Kemudian Jelaskan dengan menggunakan bahasa yang mudah dimengerti dan bebas plagiat dan wajib skrinsut dari komputer sendiri masing masing nomor di bawah ini(nilai 5 masing masing pada hari kedua).
@@ -47,6 +90,12 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	d = pd.read_csv('student-mat.csv', sep=';')
 	len(d)
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/1.PNG}
+\end{figure}
+
 \item
 \begin{verbatim}
 	# generate binary label (pass/fail) based on G1+G2+G3 
@@ -56,6 +105,12 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	d = d.drop(['G1', 'G2', 'G3'], axis=1)
 	d.head()
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/2.PNG}
+\end{figure}
+
 \item
 \begin{verbatim}
 	# use one-hot encoding on categorical columns
@@ -68,6 +123,12 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 									'romantic'])
 	d.head()
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/3.PNG}
+\end{figure}
+
 \item
 \begin{verbatim}
 	# shuffle rows
@@ -90,6 +151,12 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	print("Passing: %d out of %d (%.2f%%)" % (np.sum(d_pass), len(d_pass), 
 	       100*float(np.sum(d_pass)) / len(d_pass)))
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/4.PNG}
+\end{figure}
+
 \item 
 \begin{verbatim}
 	# fit a decision tree
@@ -97,6 +164,12 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	t = tree.DecisionTreeClassifier(criterion="entropy", max_depth=5)
 	t = t.fit(d_train_att, d_train_pass)
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/5.PNG}
+\end{figure}
+
 \item
 \begin{verbatim}
 	# visualize tree
@@ -109,6 +182,12 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	graph = graphviz.Source(dot_data)
 	graph
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/6.PNG}
+\end{figure}
+
 \item
 \begin{verbatim}
 	# save tree
@@ -119,10 +198,22 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	                     class_names=["fail", "pass"], 
 	                     filled=True, rounded=True)
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/7.PNG}
+\end{figure}
+
 \item
 \begin{verbatim}
 	t.score(d_test_att, d_test_pass)
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/8.PNG}
+\end{figure}
+
 \item
 \begin{verbatim}
 	from sklearn.model_selection import cross_val_score
@@ -131,6 +222,12 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	#(covering 95% of scores)
 	print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/9.PNG}
+\end{figure}
+
 \item 
 \begin{verbatim}
 	for max_depth in range(1, 20):
@@ -141,6 +238,13 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 				(max_depth, scores.mean(), scores.std() * 2)
 			 )
 \end{verbatim}
+\newline Output: 
+\newpage
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/10.PNG}
+\end{figure}
+
 \item
 \begin{verbatim}
 	depth_acc = np.empty((19,3), float)
@@ -156,6 +260,12 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 
 	depth_acc
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/11.PNG}
+\end{figure}
+
 \item 
 \begin{verbatim}
 	import matplotlib.pyplot as plt
@@ -163,20 +273,36 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 	ax.errorbar(depth_acc[:,0], depth_acc[:,1], yerr=depth_acc[:,2])
 	plt.show()
 \end{verbatim}
+\newline Output: 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[scale=0.5]{figures/chapter2/12.PNG}
+\end{figure}
+
 
 \end{enumerate}
 
-
+\newpage
+\newpage
 \section{Penanganan Error}
 Dari percobaan yang dilakukan di atas, error yang kita dapatkan di dokumentasikan dan di selesaikan(nilai 5 hari kedua):
 
 \begin{enumerate}
-	\item
-skrinsut error
-	\item
-Tuliskan kode eror dan jenis errornya
-	\item
-Solusi pemecahan masalah error tersebut
-
+	\item Screenshot error.
+	\begin{figure}[!htbp]
+		\centering
+		\includegraphics[scale=0.5]{figures/chapter2/13.PNG}
+	\end{figure}
+	
+	\item Tuliskan kode eror dan jenis errornya.
+	\begin{enumerate}
+		\item NameError = name 'np' is not defined
+	\end{enumerate}
+	
+	\item Solusi pemecahan masalah error tersebut.
+	\begin{enumerate}
+		\item NameError = Solusinya yaitu mengimport numpy dengan menginisialisaikannya sebagai np.
+	\end{enumerate}
+	
 \end{enumerate}
 
