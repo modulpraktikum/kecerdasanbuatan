@@ -280,13 +280,99 @@ Tugas anda adalah,praktekkan dan jelaskan dengan menggunakan bahasa yang mudah d
 
 \begin{enumerate}
 \item buat aplikasi sederhana menggunakan pandas dan jelaskan arti setiap baris kode yang dibuat(harus beda dengan teman sekelas)
+\begin{lstlisting}[language=Python]
+    #%% 1. Pandas sederhana = 2 dimensional struktur data
+    lagu = {'Judul':['Wiped Out', 'Telling Stories', 'Smells Like Teen Spirit', 'Charity'],
+            'Band':['Chief State', 'Neck Deep', 'Nirvana', 'Yungblud']} # dictionary yang menampung key dan value nya berupa judul dan band
+    
+    df = pd.DataFrame(lagu) #kemudian dibuat ke dalam bentuk dataframe yang tampung kedalam sebuah variable dengan nama df
+    
+    print(df) #untuk menampilkan menggunakan print yang diarahkan ke variable df tadi
+\end{lstlisting}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/pandasSederhana.JPG}
+	\caption{Hasil Pandas Sederhana}
+\end{figure}
+
 \item buat aplikasi sederhana menggunakan numpy dan jelaskan arti dari setiap baris kode yang dibuat(harus beda dengan teman sekelas)
+\begin{lstlisting}[language=Python]
+    #%% 2. Numpy sederhana
+    fa = np.array([14,12,20]) # variable fa untuk menampung array 1 dimensi 
+    print(fa) #untuk menampilkan hasil variable fa 
+\end{lstlisting}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/numpySederhana.JPG}
+	\caption{Hasil Numpy Sederhana}
+\end{figure}
+
 \item buat aplikasi sederhana menggunakan matplotlib dan jelaskan arti dari setiap baris kode(harus beda dengan teman sekelas)
+\begin{lstlisting}[language=Python]
+    #%% 3. Matplotlib sederhana =  untuk memvisualisasikan data ke dalam bentuk grafik
+
+    x = [1,2,3,5,6,7,3] #variable x untuk menampung semua value dan juga sebagai sumbu x
+    y = [1,2,3,3,2,4,5] #variable y untuk menampung semua value dan juga sebagai sumbu y
+    
+    plt.plot(x, y) #ploting varible x dan y
+    
+    plt.xlabel('sumbu x') #memberikan label untuk variable x
+    plt.ylabel('sumbu y') #memberikan label untuk variabel y
+    
+    plt.title('Matplotlib sederhana') #memberi title/judul pada plotting yang dibuat
+    
+    plt.show() #method show digunakan untuk menampilkan plot
+\end{lstlisting}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/numpySederhana.JPG}
+	\caption{Hasil Numpy Sederhana}
+\end{figure}
+
 \item jalankan program klasifikasi Random Fores pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/Mtplotlibsederhana.JPG}
+	\caption{Hasil Random Forest}
+\end{figure}
+
+\newpage
 \item jalankan program confusion matrix pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/chap3ConfusionMatrix.JPG}
+	\caption{Hasil  ConfusionMatrix}
+\end{figure}
+
+\newpage
 \item jalankan program klasifikasi SVM dan Decission Tree pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/chap3SVMdanDT.JPG}
+	\caption{Hasil Klasifikasi DT}
+\end{figure}
+
 \item jalankan program cross validaiton pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+\newpage
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.6]{figures/chap3CVjangRF.JPG}
+    \caption{Hasil Cross Validation Random Forest}
+    \includegraphics[scale=0.6]{figures/chap3CVjangDT.JPG}
+    \caption{Hasil Cross Validation Klasifikasi DT}
+    \includegraphics[scale=0.6]{figures/chap3CVjangSVM.JPG}
+	\caption{Hasil Cross Validation SVM}
+\end{figure}
+
 \item jalankan program pengamatan komponen informasi pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+\newpage
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.6]{figures/chap3komponeninformasi.JPG}
+    \caption{Hasil pengamatan komponen informasi}
+    \includegraphics[scale=0.4]{figures/chap3plotkomponen.JPG}
+    \caption{Hasil Plot Komponen Informasi}
+\end{figure}
 \end{enumerate}
 
 

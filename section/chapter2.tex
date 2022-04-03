@@ -1,37 +1,79 @@
 \chapter{Membangun Model Prediksi}
 
-Untuk pratikum saati ini menggunakan buku \textit{Python Artificial Intelligence Projects for Beginners}\cite{eckroth2018python}. Dengan praktek menggunakan python 3 dan editor anaconda dan library python scikit-learn.
-Dataset ada di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners .
-Tujuan pembelajaran pada pertemuan pertama antara lain:
-\begin{enumerate}
-\item
-Mengerti implementasi klasifikasi
-\item
-Memahami data set, training dan testing data
-\item
-Memahami Decission tree.
-\item
-Memahami information gain dan entropi.
-\end{enumerate}
-Tugas dengan cara dikumpulkan dengan pull request ke github dengan menggunakan latex pada repo yang dibuat oleh asisten riset. Kode program menggunakan input listing ditaruh di folder src ekstensi .py dan dipanggil ke latex dengan input listings. Tulisan dan kode tidak boleh plagiat, menggunakan bahasa indonesia yang sesuai dengan gaya bahasa buku teks.
+% Untuk pratikum saati ini menggunakan buku \textit{Python Artificial Intelligence Projects for Beginners}\cite{eckroth2018python}. Dengan praktek menggunakan python 3 dan editor anaconda dan library python scikit-learn.
+% Dataset ada di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners .
+% Tujuan pembelajaran pada pertemuan pertama antara lain:
+% \begin{enumerate}
+% \item
+% Mengerti implementasi klasifikasi
+% \item
+% Memahami data set, training dan testing data
+% \item
+% Memahami Decission tree.
+% \item
+% Memahami information gain dan entropi.
+% \end{enumerate}
+% Tugas dengan cara dikumpulkan dengan pull request ke github dengan menggunakan latex pada repo yang dibuat oleh asisten riset. Kode program menggunakan input listing ditaruh di folder src ekstensi .py dan dipanggil ke latex dengan input listings. Tulisan dan kode tidak boleh plagiat, menggunakan bahasa indonesia yang sesuai dengan gaya bahasa buku teks.
 
 \section{Teori}
 Praktek teori penunjang yang dikerjakan(nilai 5 per nomor, untuk hari pertama) :
 \begin{enumerate}
 \item
-Jelaskan apa itu binary classification dilengkapi ilustrasi gambar sendiri
+Jelaskan apa itu binary classification dilengkapi ilustrasi gambar sendiri\\
+Binary classification adalah proses mengklasifikasi yang ouputnya dibagi menjadi 2 kelas 
+
 \item
 Jelaskan apa itu supervised learning dan unsupervised learning dan clustering dengan ilustrasi gambar sendiri.
+\par
+    \textit{Supervised Learning} sebuah pembelajaran yang ditentukan berdasarkan penggunaan traning set yang berlabel.
+\par
+    \textit{Unsupervised Learning} sebuah pembelajaran yang ditentukan berdasarkan penggunaan traning set yang tidak berlabel. 
+
 \item
 Jelaskan apa itu evaluasi dan akurasi dari buku dan disertai ilustrasi contoh dengan gambar sendiri
+\par
+    Evaluasi adalah tentang mengukur sebarapa baik nilai performa dari suatu model. Dan akurasi adalah tigkat ketepatan yang benar dari suatu model.
+    
 \item
-Jelaskan bagaimana cara membuat dan membaca confusion matrix, buat confusion matrix buatan sendiri.
+Jelaskan bagaimana cara membuat dan membaca confusion matrix, buat confusion matrix buatan sendiri.\\
+Cara membuat dan membaca confusion matrix :
+\begin{enumerate}
+    \item Tentukan studi kasus nya
+    \item Buat ke dalam Decision Tree
+    \item Siapkan data testing 
+    \item Kemudian cari value dari variabel misal nya a,b,c,d
+    \item Dan cari value dari recall, precision, accuracy dan juga error state
+\end{enumerate}
+
 \item
 Jelaskan bagaimana K-fold cross validation bekerja dengan gambar ilustrasi contoh buatan sendiri.
+Cara kerja dari K-fold cross validation :
+\begin{enumerate}
+    \item Total instace dibagi menjadi n bagian
+    \item Fold pertama merupakan bagian pertama yang menjadi Testing data dan sisanya menjadi training data
+    \item Hitung akurasinya dengan menggunakan persamaan
+    \item Fold ke dua merupakan bagian kedua yang menjadi testing data dan sisanya mendjadi training data
+    \item Hitung lagi akurasi nya dan juga seterus nya pada fold yang terakhir
+    \item Dan terakhir adalah hitung rata-rata akurasi nya
+\end{enumerate}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/K-fold.JPG}
+	\caption{Ilutrasi K-fold cross validation}
+\end{figure}
+
+
 \item
-Jelaskan apa itu decision tree dengan gambar ilustrasi contoh buatan sendiri.
+Jelaskan apa itu decision tree dengan gambar ilustrasi contoh buatan sendiri.\\
+Decision Tree adalah suatu metode yang digunakan untuk mengambil keputusan
+
+
 \item
-Jelaskan apa itu information gain dan entropi dengan gambar ilustrasi buatan sendiri.
+Jelaskan apa itu information gain dan entropi dengan gambar ilustrasi buatan sendiri.\\
+information gain adalah kumpulan informasi yang diperolah dari variable acak. Dan Entropi adalah tingkat keacakan pada informasi yang sedang diproses.\\
+
+
+
 \end{enumerate}
 
 \section{scikit-learn}
@@ -40,129 +82,127 @@ Tugas anda adalah, dataset ganti menggunakan \textbf{student-mat.csv} dan mengga
 
 \begin{enumerate}
 
-\item
-\begin{verbatim}
-	# load dataset (student mat pakenya)
-	import pandas as pd
-	d = pd.read_csv('student-mat.csv', sep=';')
-	len(d)
-\end{verbatim}
-\item
-\begin{verbatim}
-	# generate binary label (pass/fail) based on G1+G2+G3 
-	# (test grades, each 0-20 pts); threshold for passing is sum>=30
-	d['pass'] = d.apply(lambda row: 1 if (row['G1']+row['G2']+row['G3']) 
-											>= 35 else 0, axis=1)
-	d = d.drop(['G1', 'G2', 'G3'], axis=1)
-	d.head()
-\end{verbatim}
-\item
-\begin{verbatim}
-	# use one-hot encoding on categorical columns
-	d = pd.get_dummies(d, columns=['sex', 'school', 'address', 
-									'famsize', 
-									'Pstatus', 'Mjob', 'Fjob', 
-	                               'reason', 'guardian', 'schoolsup', 
-								   'famsup', 'paid', 'activities',
-	                               'nursery', 'higher', 'internet', 
-									'romantic'])
-	d.head()
-\end{verbatim}
-\item
-\begin{verbatim}
-	# shuffle rows
-	d = d.sample(frac=1)
-	# split training and testing data
-	d_train = d[:500]
-	d_test = d[500:]
+\item load dataset student-mat.csv
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/importchap2.JPG}
+	\caption{Import}
+    \includegraphics[scale=0.5]{figures/Chap2-1.JPG}
+	\caption{Source Code Task 1}
+    \includegraphics[scale=0.5]{figures/Chap2-1.1.JPG}
+	\caption{Hasil Task}
+\end{figure}
 
-	d_train_att = d_train.drop(['pass'], axis=1)
-	d_train_pass = d_train['pass']
+\newpage
+\item generate binary label
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.4]{figures/Chap2-2.JPG}
+	\caption{Source Code Task 2}
+    \includegraphics[scale=0.5]{figures/Chap2-2.1.JPG}
+	\caption{Hasil Task 2}
+\end{figure}
 
-	d_test_att = d_test.drop(['pass'], axis=1)
-	d_test_pass = d_test['pass']
+\item use one-hot encoding on categorical columns
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.4]{figures/Chap3-1.JPG}
+	\caption{Source Code Task 3}
+    \includegraphics[scale=0.5]{figures/Chap3-1.1.JPG}
+	\caption{Hasil Task 3}
+\end{figure}
 
-	d_att = d.drop(['pass'], axis=1)
-	d_pass = d['pass']
+\item shuffle rows
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.4]{figures/Chap4-1.JPG}
+	\caption{Source Code Task 4}
+	\newpage
+    \includegraphics[scale=0.5]{figures/Chap4-1.1.JPG}
+	\caption{Hasil Task 4}
+\end{figure}
 
-	# number of passing students in whole dataset:
-	import numpy as np
-	print("Passing: %d out of %d (%.2f%%)" % (np.sum(d_pass), len(d_pass), 
-	       100*float(np.sum(d_pass)) / len(d_pass)))
-\end{verbatim}
-\item 
-\begin{verbatim}
-	# fit a decision tree
-	from sklearn import tree
-	t = tree.DecisionTreeClassifier(criterion="entropy", max_depth=5)
-	t = t.fit(d_train_att, d_train_pass)
-\end{verbatim}
-\item
-\begin{verbatim}
-	# visualize tree
-	import graphviz
-	dot_data = tree.export_graphviz(t, out_file=None, label="all", 
-									impurity=False, proportion=True,
-	                                feature_names=list(d_train_att), 
-									class_names=["fail", "pass"], 
-	                                filled=True, rounded=True)
-	graph = graphviz.Source(dot_data)
-	graph
-\end{verbatim}
-\item
-\begin{verbatim}
-	# save tree
-	tree.export_graphviz(t, out_file="student-performance.dot", 
-						 label="all", impurity=False, 
-						 proportion=True,
-	                     feature_names=list(d_train_att), 
-	                     class_names=["fail", "pass"], 
-	                     filled=True, rounded=True)
-\end{verbatim}
-\item
-\begin{verbatim}
-	t.score(d_test_att, d_test_pass)
-\end{verbatim}
-\item
-\begin{verbatim}
-	from sklearn.model_selection import cross_val_score
-	scores = cross_val_score(t, d_att, d_pass, cv=5)
-	# show average score and +/- two standard deviations away 
-	#(covering 95% of scores)
-	print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
-\end{verbatim}
-\item 
-\begin{verbatim}
-	for max_depth in range(1, 20):
-	    t = tree.DecisionTreeClassifier(criterion="entropy", 
-			max_depth=max_depth)
-	    scores = cross_val_score(t, d_att, d_pass, cv=5)
-	    print("Max depth: %d, Accuracy: %0.2f (+/- %0.2f)" % 
-				(max_depth, scores.mean(), scores.std() * 2)
-			 )
-\end{verbatim}
-\item
-\begin{verbatim}
-	depth_acc = np.empty((19,3), float)
-	i = 0
-	for max_depth in range(1, 20):
-	    t = tree.DecisionTreeClassifier(criterion="entropy", 
-			max_depth=max_depth)
-	    scores = cross_val_score(t, d_att, d_pass, cv=5)
-	    depth_acc[i,0] = max_depth
-	    depth_acc[i,1] = scores.mean()
-	    depth_acc[i,2] = scores.std() * 2
-	    i += 1
+\newpage
+\item fit a decision tree
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/Chap5-1.JPG}
+	\caption{Source Code Task 5}
+	
+    \includegraphics[scale=0.5]{figures/Chap5-1.1.JPG}
+	\caption{Hasil Task 5}
+\end{figure}
 
-	depth_acc
-\end{verbatim}
-\item 
-\begin{verbatim}
-	import matplotlib.pyplot as plt
-	fig, ax = plt.subplots()
-	ax.errorbar(depth_acc[:,0], depth_acc[:,1], yerr=depth_acc[:,2])
-	plt.show()
-\end{verbatim}
+
+\item visualize tree
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/Chap6-1.JPG}
+	\caption{Source Code Task 6}
+    \includegraphics[scale=0.5]{figures/Chap6-1.1.JPG}
+	\caption{Hasil Task 6}
+\end{figure}
+
+\newpage
+\item save tree
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/Chap7-1.JPG}
+	\caption{Source Code Task 7}
+    \includegraphics[scale=0.5]{figures/Chap7-1.1.JPG}
+	\caption{Hasil Task 7}
+    \includegraphics[scale=0.1]{figures/student-performance.png}
+	\caption{Hasil Task 7}
+\end{figure}
+
+\item task 8
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/Chap8-1.JPG}
+	\caption{Source Code Task 8}
+    \includegraphics[scale=0.5]{figures/Chap8-1.1.JPG}
+	\caption{Hasil Task 8}
+\end{figure}
+
+
+\item task 9
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/Chap9-1.JPG}
+	\caption{Source Code Task 9}
+    \includegraphics[scale=0.5]{figures/Chap9-1.1.JPG}
+	\caption{Hasil Task 9}
+\end{figure}
+
+\newpage
+\item task 10
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/Chap11-1.JPG}
+	\caption{Source Code Task 10}
+    \includegraphics[scale=0.5]{figures/Chap10-1.1.JPG}
+	\caption{Hasil Task 10}
+\end{figure}
+
+
+\item task 11
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/Chap11-1.JPG}
+	\caption{Source Code Task 11}
+    \includegraphics[scale=0.5]{figures/Chap11-1.1.JPG}
+	\caption{Hasil Task 11}
+\end{figure}
+
+\newpage
+\item task 12
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=0.5]{figures/Chap12-1.JPG}
+	\caption{Source Code Task 12}
+    \includegraphics[scale=0.5]{figures/Chap12-1.1.JPG}
+	\caption{Hasil Task 12}
+\end{figure}
 
 \end{enumerate}
 
