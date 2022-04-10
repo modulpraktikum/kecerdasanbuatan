@@ -1,311 +1,255 @@
 \chapter{Prediksi dengan Random Forest}
 
-Untuk pratikum saati ini menggunakan buku \textit{Python Artificial Intelligence Projects for Beginners}\cite{eckroth2018python}. Dengan praktek menggunakan python 3 dan editor anaconda dan library python scikit-learn.
-Kode program ada di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners .
-Tujuan pembelajaran pada pertemuan pertama antara lain:
+Random forest adalah suatu algoritma yang digunakan pada klasifikasi data dalam jumlah yang besar. Proses klasifikasi pada random forest berawal dari memecah data sampel yang ada kedalam decision tree secara acak. Setelah pohon terbentuk,maka akan dilakukan voting pada setiap kelas dari data sampel. Kemudian, mengkombinasikan vote dari setiap kelas kemudian diambil vote yang paling banyak.Random forest terdiri dari kumpulan decision tree. Random forest merupakan algoritma supervised learning yang digunakan untuk klasifikasi dan regresi. Random forest dapat menangani kumpulan data yang berisi variable kontinu seperti dalam kasus regresi dan variable kategoris dalam kasus klasifikasi. Random forest bekerja sepeti enseble dimana enseble berarti menggabungkan beberapa model menjadi kumpulan model yang digunakan untuk membuat prediksi. Random forest akan memilih pengamatan secara acak kemudian membangun sebuah decision tree dan mengambil hasil rata-ratanya.
+
+\section{Dataset}
+Dataset adalah sekumpulan data yang disusun secara terstruktur. Biasanya, dataset dipresentasikan dalam bentuk tabel, alias baris dan kolom. Dataset merupakan sekumpulan data dimana data terabut berasal dari informasi di masa lalu yang dikelola menjadi sebuah informasi untuk dapat melakukan data mining. Dataset berisi lebih dari satu variable yang digunakan untuk klasifikasi. Cara Membaca Dataset dan Arti Setiap File dan isi Field Masing-masing File :
 \begin{enumerate}
-\item
-Mengerti implementasi klasifikasi dan teknik evaluasi
-\item
-Memprediksi spesies burung dengan random forest
-\item
-Memahami Confusion Matrix.
-\end{enumerate}
-Tugas dengan cara dikumpulkan dengan pull request ke github dengan menggunakan latex pada repo yang dibuat oleh asisten riset. Kode program menggunakan input listing ditaruh di folder src ekstensi .py dan dipanggil ke latex dengan input listings. Tulisan dan kode tidak boleh plagiat, menggunakan bahasa indonesia yang sesuai dengan gaya bahasa buku teks.
-
-\section{Teori}
-Random Forest adalah hasil voting dari beberapa decission tree yang masing-masing memegang atribut yang berbeda. Jadi setiap decission tree spesifik terhadap atribut tersebut yang merupakan bagian kecil dari keseluruhan atribut di data set. Hindari RF jika atribut terlalu sedikit untuk membentuk beberapa tree. Pada praktek kali ini mengggunakan dataset spesies burung yang diambil dari situs 
-(http://www.vision.caltech.edu/visipedia/CUB-200-2011.html). Didalamnya terdapat 12.000 foto dari 200 spesies yang berbeda. Yang akan kita pakai untuk RF hanya atribut dari burunynya saja seperti ukuran, bentuk dan warna. Data tersebut diberi label secara manual oleh manusia dengan memanfaatkan jasa dari Amazon's Mechanical Turk.
-
-\subsection{Random Forest}
-Pertama dataset kita baca terlebih dahulu.
-\begin{lstlisting}[caption=Membaca data file txt,label={lst:fungsisederhana}]
-import pandas as pd
-
-# some lines have too many fields (?), so skip bad lines
-imgatt = pd.read_csv("data/CUB_200_2011/attributes/image_attribute_labels.txt",
-                     sep='\s+', header=None, error_bad_lines=False, warn_bad_lines=False,
-                     usecols=[0,1,2], names=['imgid', 'attid', 'present'])
-
-\end{lstlisting}
-
-Melihat sebagian data awal, dengan menggunakan listing \ref{lst:3.1}.
-
-\begin{lstlisting}[caption=Melihat sebagian data awal,label={lst:3.1}]
-imgatt.head()
-\end{lstlisting}
-
-Melihat jumlah data menggunakan listing \ref{lst:3.2}.
-\begin{lstlisting}[caption=Mengetahui jumlah data,label={lst:3.2}]
-imgatt.shape
-\end{lstlisting}
-
-Merubah atribut menjadi kolom dengan menggunakan pivot layaknya excel. lalu kita cek isinya dengan menggunakan perintah pada listing \ref{lst:3.3}.
-\begin{lstlisting}[caption=Pivot dataset,label={lst:3.3}]
-imgatt2 = imgatt.pivot(index='imgid', columns='attid', values='present')
-
-imgatt2.head()
-imgatt2.shape
-\end{lstlisting}
-
-
-Sekarang kita akan meload jawabannya yang berisi apakah burung itu termasuk dalam spesies yang mana. Dua kolomnya adalah imgid dan label. Dan melakukan pivot yang mana imgid menjadi index yang artinya unik perintahnya ada di listing \ref{lst:3.6}. Lalu kita cek kembali datanya. 
-\begin{lstlisting}[caption=membaca dataset label file txt,label={lst:3.6}]
-imglabels = pd.read_csv("data/CUB_200_2011/image_class_labels.txt", 
-                        sep=' ', header=None, names=['imgid', 'label'])
-
-imglabels = imglabels.set_index('imgid')
-
-
-imglabels.head()
-imglabels.shape
-\end{lstlisting}
-
-Karena isinya sama kita bisa melakukan join antara dua data. Sehingga kita akan mendapatkan data ciri dan data jawabannya atau labelnya sehingga bisa dikatekorikan supervised learning. maka perintah untuk menggabungkan kedua data dan kemudian kita melakukan pemisahan antara data set untuk training dan test dengan perintah di listing \ref{lst:3.7}.
-\begin{lstlisting}[caption=Menggabungkan field dari dua file terpisah,label={lst:3.7}]
-df = imgatt2.join(imglabels)
-df = df.sample(frac=1)
-\end{lstlisting}
-
-Kemudian drop label yang didepan, dan gunakan label yang paling belakang yang baru di join dengan perintah listing \ref{lst:3.8}.
-\begin{lstlisting}[caption=Memisahkan dan memilih label,label={lst:3.8}]
-df_att = df.iloc[:, :312]
-df_label = df.iloc[:, 312:]
-\end{lstlisting}
-Kita bisa mengecek isinya dengan perintah listing \ref{lst:3.9}.
-\begin{lstlisting}[caption=Melihat isi masing masing data frame,label={lst:3.9}]
-df_att.head()
-df_label.head()
-\end{lstlisting}
-
-Kita bagi menjadi dua bagian, 8000 row pertama sebagai data training sisanya sebagai data testing dengan perintah listing \ref{lst:3.10}.
-\begin{lstlisting}[caption=Pembagian data training dan test,label={lst:3.10}]
-df_train_att = df_att[:8000]
-df_train_label = df_label[:8000]
-df_test_att = df_att[8000:]
-df_test_label = df_label[8000:]
-
-df_train_label = df_train_label['label']
-df_test_label = df_test_label['label']
-\end{lstlisting}
-
-Kita panggil kelas RandomForestClassifier. max features diartikan sebagai berapa banyak kolom pada setiap tree dengan perintah listing \ref{lst:3.11}.
-\begin{lstlisting}[caption=Instansiasi kelas Random Forest,label={lst:3.11}]
-from sklearn.ensemble import RandomForestClassifier
-clf = RandomForestClassifier(max_features=50, random_state=0, n_estimators=100)
-
-\end{lstlisting}
-Kemudian lakukan fit untuk membangun random forest yang sudah ditentukan dengan maksimum fitur sebanya 50 untuk perpohonnya dengan perintah listing \ref{lst:3.12}.
-
-\begin{lstlisting}[caption=Fitting random forest dengan dataset training,label={lst:3.12}]
-clf.fit(df_train_att, df_train_label)
-\end{lstlisting}
-Hasilnya bisa kita dapatkan dengan perintah predict dengan perintah listing \ref{lst:3.13}.
-\begin{lstlisting}[caption=Melihat Hasil prediksi,label={lst:3.13}]
-print(clf.predict(df_train_att.head()))
-\end{lstlisting}
-
-Untuk besaran akurasinya dengan perintah listing \ref{lst:3.14}
-\begin{lstlisting}[caption=Score perolehan dari klasifikasi,label={lst:3.14}]
-clf.score(df_test_att, df_test_label)
-\end{lstlisting}
-
-\subsection{Confusion Matrix}
-Dari RF kita coba petakan ke dalam Confusion Matrix dan lihat hasilnya dengan perintah listing \ref{lst:3.15}.
-\begin{lstlisting}[caption=Membuat Confusion Matrix,label={lst:3.15}]
-from sklearn.metrics import confusion_matrix
-pred_labels = clf.predict(df_test_att)
-cm = confusion_matrix(df_test_label, pred_labels)
-
-cm
-\end{lstlisting}
-
-Kemudian kita plot dengan perintah
-\begin{lstlisting}[caption=Plotting Confusion Matrix,label={lst:3.16}]
-import matplotlib.pyplot as plt
-import itertools
-def plot_confusion_matrix(cm, classes,
-                          normalize=False,
-                          title='Confusion matrix',
-                          cmap=plt.cm.Blues):
-    """
-    This function prints and plots the confusion matrix.
-    Normalization can be applied by setting `normalize=True`.
-    """
-    if normalize:
-        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-        print("Normalized confusion matrix")
-    else:
-        print('Confusion matrix, without normalization')
-
-    print(cm)
-
-    plt.imshow(cm, interpolation='nearest', cmap=cmap)
-    plt.title(title)
-    #plt.colorbar()
-    tick_marks = np.arange(len(classes))
-    plt.xticks(tick_marks, classes, rotation=90)
-    plt.yticks(tick_marks, classes)
-
-    fmt = '.2f' if normalize else 'd'
-    thresh = cm.max() / 2.
-    #for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-    #    plt.text(j, i, format(cm[i, j], fmt),
-    #             horizontalalignment="center",
-    #             color="white" if cm[i, j] > thresh else "black")
-
-    plt.tight_layout()
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
-
-\end{lstlisting}
-
- Agar plot sumbunya sesuai dengan nama datanya maka kita set dengan perintah
-\begin{lstlisting}[caption=Membaca file classes.txt,label={lst:3.17}]
-birds = pd.read_csv("data/CUB_200_2011/classes.txt",
-                    sep='\s+', header=None, usecols=[1], names=['birdname'])
-birds = birds['birdname']
-birds
-
-\end{lstlisting}
-
-Lalu kita plot
-\begin{lstlisting}[caption=Plot hasil perubahan label,label={lst:3.18}]
-import numpy as np
-np.set_printoptions(precision=2)
-plt.figure(figsize=(60,60), dpi=300)
-plot_confusion_matrix(cm, classes=birds, normalize=True)
-plt.show()
-\end{lstlisting}
-
-
-
-\subsection{Mencoba dengan metode Decission Tree dan SVM}
-Kita coba menggunakan Decission tree 
-\begin{lstlisting}[caption=Mencoba klasifikasi dengan decission tree dengan dataset yang sama,label={lst:3.19}]
-from sklearn import tree
-clftree = tree.DecisionTreeClassifier()
-clftree.fit(df_train_att, df_train_label)
-clftree.score(df_test_att, df_test_label)
-\end{lstlisting}
-Kita coba menggunakan SVM
-\begin{lstlisting}[caption=Mencoba klasifikasi dengan SVM dengan dataset yang sama,label={lst:3.20}]
-from sklearn import svm
-clfsvm = svm.SVC()
-clfsvm.fit(df_train_att, df_train_label)
-clfsvm.score(df_test_att, df_test_label)
-\end{lstlisting}
-
-\subsection{Pengecekan Cross Validation}
-Pengeceken Cross Validation untuk random forest
-\begin{lstlisting}[caption=Hasil Cross Validation random forest,label={lst:3.21}]
-from sklearn.model_selection import cross_val_score
-scores = cross_val_score(clf, df_train_att, df_train_label, cv=5)
-# show average score and +/- two standard deviations away (covering 95% of scores)
-print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
-\end{lstlisting}
-untuk decission tree
-\begin{lstlisting}[caption=Hasil Cross Validation Decission Tree,label={lst:3.22}]
-scorestree = cross_val_score(clftree, df_train_att, df_train_label, cv=5)
-print("Accuracy: %0.2f (+/- %0.2f)" % (scorestree.mean(), scorestree.std() * 2))
-\end{lstlisting}
-untuk SVM
-\begin{lstlisting}[caption=Hasil Cross Validation SVM,label={lst:3.23}]
-scoressvm = cross_val_score(clfsvm, df_train_att, df_train_label, cv=5)
-print("Accuracy: %0.2f (+/- %0.2f)" % (scoressvm.mean(), scoressvm.std() * 2))
-\end{lstlisting}
-
-
-
-\subsection{Pengamatan komponen informasi}
-Untuk mengetahui berapa banyak tree yang dibuat, berapa banyak atribut yang dipakai dan informasi lainnya menggunakan kode
-\begin{lstlisting}[caption=Melakukan Pengamatan komponen informasi,label={lst:3.24}]
-max_features_opts = range(5, 50, 5)
-n_estimators_opts = range(10, 200, 20)
-rf_params = np.empty((len(max_features_opts)*len(n_estimators_opts),4), float)
-i = 0
-for max_features in max_features_opts:
-    for n_estimators in n_estimators_opts:
-        clf = RandomForestClassifier(max_features=max_features, n_estimators=n_estimators)
-        scores = cross_val_score(clf, df_train_att, df_train_label, cv=5)
-        rf_params[i,0] = max_features
-        rf_params[i,1] = n_estimators
-        rf_params[i,2] = scores.mean()
-        rf_params[i,3] = scores.std() * 2
-        i += 1
-        print("Max features: %d, num estimators: %d, accuracy: %0.2f (+/- %0.2f)" %               (max_features, n_estimators, scores.mean(), scores.std() * 2))
-
-\end{lstlisting}
-Dan kita bisa melakukan plot informasi ini dengan kode
-\begin{lstlisting}[caption=Plot Komponen informasi agar bisa dibaca,label={lst:3.25}]
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-fig = plt.figure()
-fig.clf()
-ax = fig.gca(projection='3d')
-x = rf_params[:,0]
-y = rf_params[:,1]
-z = rf_params[:,2]
-ax.scatter(x, y, z)
-ax.set_zlim(0.2, 0.5)
-ax.set_xlabel('Max features')
-ax.set_ylabel('Num estimators')
-ax.set_zlabel('Avg accuracy')
-plt.show()
-\end{lstlisting}
-
-
-
-
-\section{Soal Teori}
-Praktek teori penunjang yang dikerjakan(nilai 5 per nomor, untuk hari pertama) :
-\begin{enumerate}
-\item
-Jelaskan apa itu random forest, sertakan gambar ilustrasi buatan sendiri.
-\item
-Jelaskan cara membaca dataset kasus dan artikan makna setiap file dan isi field masing masing file.
-\item
-Jelaskan apa itu cross validation
-\item
-Jelaskan apa arti score 44\% pada random forest, 27\% pada decission tree dan 29\%dari SVM.
-\item
-Jelaskan bagaimana cara membaca confusion matriks dan contohnya memakai gambar atau ilustrasi sendiri.
-\item
-Jelaskan apa itu voting pada random forest disertai dengan ilustrasi gambar sendiri.
+    \item Langkah awal yaitu dengan Menggunakan library Pandas pada python untuk membaca dataset dengan format text file.
+    \item Selanjutnya buat variable baru misalnya "dataset" yang berisi perintah untuk membaca file dataset.
 \end{enumerate}
 
-\section{Praktek Program}
-Tugas anda adalah,praktekkan dan jelaskan dengan menggunakan bahasa yang mudah dimengerti dan bebas plagiat dan wajib skrinsut dari komputer sendiri masing masing nomor di bawah ini(nilai 5 masing masing pada hari kedua).
+\section{Cross Validation}
+Cross Validation adalah metode yang paling biasa digunakan untuk evaluasi kinerja prediktif dari model. Data biasanya dibagi menjadi dua bagian dan berdasarkan pemisahan ini pada satu bagian, pelatihan dilakukan sementara prediktif diuji pada bagian lain. Cross validation merupakan metode untuk mengevaluasi dan membandingkan algoritma dengan membagi data menjadi dua yaiti data latih dan data uji. Cross validation (CV) adalah salah satu teknik yang digunakan untuk menguji keefektifan suatu model dan merupakan prosedur pengambilan sampel ulang yang digunakan untuk mengevaluasi suatu model jika memiliki data yang terbatas. Untuk dapat melakukan CV maka perlu menyisihkan sampel/sebagian data yang tidak digunakan untuk melatih model, kemudian menggunakan sampel ini untuk pengujian/validasi. Bentuk dasar dari cross-validation adalah k-fold cross-validation.
 
+\section{Arti Score 44\% Pada Random Forest, 27\% Pada Decission Tree Dan 29\% Dari SVM}
+merupakan presentase keakurasian prediksi yang dilakukan pada saat testing
+menggunakan label pada dataset yang digunakan. Score akan mendefinisikan
+aturan evaluasi model, kemudian saat dijalankan akan muncul sebuah persentase yang menunjukan keakurasian atau keberhasilan dari prediksi yang dilakukan. Jika
+menggunakan Random Forest maka hasilnya 40\% dan jika menggunakan Decission Tree hasil prediksinya yaitu 27\% dan pada SVM 29\%.
+
+\section{Confusion Matrix}
+Confusion Matrix adalah pengukuran performa untuk masalah klasifikasi machine learning dimana keluaran dapat berupa dua kelas atau lebih. Confusion Matrix adalah tabel dengan 4 kombinasi berbeda dari nilai prediksi dan nilai aktual. Confusion Matrix atau disebut juga dengan Error Matrix pada dasarnya akan memberikan informasi mengenai perbandingan hasil dari klasifikasi yang dilakukan oleh model atau sistem dengan hasil sebenarnya. Confusion Matrix berbentuk tabel matrix yang akan menggambarkan kinerja dari model klasifikasi pada data uji yang nilai sebenarnya diketahui.
+\newline
+\textbf {Berikut adalah contoh dari confusion matrix :}
 \begin{enumerate}
-\item buat aplikasi sederhana menggunakan pandas dan jelaskan arti setiap baris kode yang dibuat(harus beda dengan teman sekelas)
-\item buat aplikasi sederhana menggunakan numpy dan jelaskan arti dari setiap baris kode yang dibuat(harus beda dengan teman sekelas)
-\item buat aplikasi sederhana menggunakan matplotlib dan jelaskan arti dari setiap baris kode(harus beda dengan teman sekelas)
-\item jalankan program klasifikasi Random Fores pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program confusion matrix pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program klasifikasi SVM dan Decission Tree pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program cross validaiton pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program pengamatan komponen informasi pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+    \item Precision (Positive Predictive Value)
+    \item Accuracy
+    \item Recall atau Sensitivity (True Positive Rate)
+\end{enumerate}
+\textbf {Langkah membuat dan membaca confusion matrix}
+\begin{enumerate}
+    \item Langkah awal yaitu Tentukan pokok permasalahan atau menggunakan dataset, misalnya data pasien covid
+    \item Langkah selanjutnya, Membagi dataset serta membuat model prediksi menggunakan Decision Tree. Dataset dibagi menjadi dua yaitu data latiih dan data uji. Data latih digunakan untuk melatih model yang dibuat dan evaluasi akan dilakukan pada data uji.
+    \item lalu langkah terkahir, Evaluasi model menggunakan confusion matrix yaitu untuk mengetahui keakuratan model yang sudah dibuat menggunakan performance metrics seperti: accuracy, recall, dan precision.
+\end{enumerate}
+
+\section{Voting Pada Random Forest}
+Target prediksi dengan voting tertinggi digunakan sebagai prediksi akhir dari algoritma random forest. Voting merupakan suara untuk setiap target yang diprediksi pada saat melakukan Random Forest.
+
+\section{Praktikum}
+\subsection{Aplikasi Sederhana Menggunakan Pandas}
+\begin{figure}[!htbp]
+    \centering
+
+    \includegraphics[width=10cm,height=4cm]{figures/Cp3-1.png}
+    \caption{Aplikasi sederhana menggunakan pandas}
+    \label{penanda}
+\end{figure}
+\textbf{Penjelasan Code Aplikasi Sederhana pandas perbaris :}
+\begin{itemize}
+    \item Langkah awal yaitu di line 1 merupakan langkah mengimport library pandas kemudian di inisialisasi menjadi pd
+    \item Untuk bagian Variable data di definisikan data data untuk kolom nama, kolom npm dan kolom angkatan
+    \item Pada bagian Variable frame itu akan berfungsi mengubah data pada variable data disejajarkan dengan baris dan kolom menggunakan pd dataframe
+    \item Selanjutnya Peritah frame kemudian dijalankan untuk dapat menampilkan hasil dari dataframe
+\end{itemize}
+
+\subsection{Aplikasi Sederhana Menggunakan Matplotlib}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=10cm,height=2cm]{figures/Cp3-2.png}
+    \caption{Aplikasi sederhana menggunakan matplotlib}
+    \label{penanda}
+\end{figure}
+\textbf{Penjelasan Code Aplikasi Sederhana matplotlib perbaris :}
+\begin{itemize}
+    \item Baris Pertama Yaitu import library matplotlib kemudian di inisialisasi menjadi plt
+    \item Variable prodi sebagai sumbu x untuk nama nama prodi
+    \item Variable jumlah mhs sebagai sumbu y untuk jumlah atau banyaknya mahasiswa
+    \item plt figure digunakan untuk mengatur size dan plt bar merupakan fungsi yang digunakan untuk memvisualisasikan bar
+    \item plt title digunakan untuk memberikan judul dan plt ylabel untuk memberikan judul pada sumbu y
+    \item plt yticks dan xticks digunakan untuk mengatur size tulisan pada sumbu y dan x
+\end{itemize}
+
+\subsection{Aplikasi Sederhana Menggunakan Numpy}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=6cm,height=6cm]{figures/Cp3-3.png}
+    \caption{Aplikasi sederhana menggunakan numpy}
+    \label{penanda}
+\end{figure}
+\textbf{Penjelasan Code Aplikasi Sederhana numpy perbaris :}
+\begin{itemize}
+    \item Baris Pertama Yaitu import library numpy kemudian di inisialisasi menjadi np
+    \item Variable a digunakan sebagi fungsi array yang pertama
+    \item Variable b digunakan sebagai fungsi array yang kedua
+    \item Variable c digunakan sebagai fungsi array yang ketiga
+    \item Perintah print digunakan untuk menampilkan hasil array
+    \item Operasi pada array menggunakan perkalian pada a dan b dan penjumlahan pada b dan c
+\end{itemize}
+
+
+\section{Program Klasifikasi Random Forest}
+Berikut merupakan output dari percobaan Random Forest yang telah dilakukan :
+\begin{enumerate}
+
+    \begin{figure}[!htbp]
+        \centering
+        \includegraphics[width=12cm,height=6cm]{figures/Cp3-4.png}
+        \caption{Membaca dataset file txt}
+        \label{penanda}
+    \end{figure}
+
+    \item Kode berikut akan menampilkan output banyaknya jumlah baris dan kolom data frame imgatt
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=4cm,height=1cm]{figures/Cp3-5.png}
+              \caption{Mengetahui jumlah data}
+              \label{penanda}
+          \end{figure}
+
+    \item imgatt2 menggunakan function pivot untuk merubah kolom menjadi baris dan baris menjadi kolom dari data frame sebelumnya.
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=12cm,height=2cm]{figures/Cp3-6.png}
+              \caption{Pivot dataset}
+              \label{penanda}
+          \end{figure}
+
+    \item Pada kode berikut digunakan dataset label kemudian akan diberi label pada burung dan menentukan burung tersebut ke dalam spesies apa. di dalam data yang sebelumnya ada 312 kolom dimana 312 data tersebut memiliki kelompoknya masing-masing. Dalam hal ini akan dimunculkan dua kolom pada variable explorer yaitu imgd dan label yang terdiri dari 11788 baris dan 1 kolom
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=12cm,height=2cm]{figures/Cp3-7.png}
+              \caption{Membaca Dataset label}
+              \label{penanda}
+          \end{figure}
+
+    \item Selanjutnya data imgatt2 akan join dengan imglabels atau menggabungkan field dari dua file yang terpisah, karena data baris sama banyak nya maka ditambahkan data kolom dari imgatt2 312 kolom dengan imglabels 1 kolom, maka hasilnya menjadi 313 kolom
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=7cm,height=2cm]{figures/Cp3-8.png}
+              \caption{Menggabungkan field dari file yang terpisah}
+              \label{penanda}
+          \end{figure}
+
+    \item Kemudian memisahkan dan memilih label atau memecah data kembali seperti sebelumnya dengan cara mengambil 312 dari belakang dan mengambil 312 dari depan.
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=7cm,height=2cm]{figures/Cp3-9.png}
+              \caption{Memisahkan dan memilih label}
+              \label{penanda}
+          \end{figure}
+
+    \item Membagi Data training dan data testing dengan mengambil row sebanyak 8000 dari akhir untuk training dan 8000 dari awal untuk data testing.
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=7cm,height=3cm]{figures/Cp3-10}
+              \caption{Pembagian data training dan tes}
+              \label{penanda}
+          \end{figure}
+
+    \item Melakukan klasifikasi, di dalam kelas randomforestclassifier setting parameter variable yaitu 50 dalam satu independen tree maksimal akan mengakomodir 50 atribut. Kemudian lakukan instansiasi dengan melakukan klasifikasi pada data train att beserta data label nya.
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=14cm,height=3cm]{figures/Cp3-11}
+              \caption{Instansiasi kelas Random Forest}
+              \label{penanda}
+          \end{figure}
+\end{enumerate}
+
+\section{Program Confusion Matrix}
+Berikut merupakan output dari percobaan Confusion Matrix yang telah dilakukan :
+\begin{enumerate}
+
+    \item Selanjutnya plotting confusion matrix menggunakan matplotlib.
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=11cm,height=11cm]{figures/Cp3-12.png}
+              \caption{Plotting Confusion Matrix}
+              \label{penanda}
+          \end{figure}
+
+    \item Membaca File Classes
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=11cm,height=5cm]{figures/Cp3-13.png}
+              \caption{Membaca file classes}
+              \label{penanda}
+          \end{figure}
+
+    \item Plot hasil perubahan label
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=10cm,height=4cm]{figures/Cp3-14.png}
+              \caption{Plot hasil perubahan label}
+              \label{penanda}
+          \end{figure}
 \end{enumerate}
 
 
-\section{Penanganan Error}
-Dari percobaan yang dilakukan di atas, error yang kita dapatkan di dokumentasikan dan di selesaikan(nilai 5 per error yang ditangani. Untuk hari kedua):
-
+\section{Program Klasifikasi SVM dan Decission Tree}
+Berikut merupakan output dari percobaan Klasifikasi SVM dan Decission Tree yang telah dilakukan :
 \begin{enumerate}
-	\item skrinsut error
-	\item Tuliskan kode eror dan jenis errornya
-	\item Solusi pemecahan masalah error tersebut
+    \begin{figure}[!htbp]
+        \centering
+        \includegraphics[width=8cm,height=2cm]{figures/Cp3-15.png}
+        \caption{Klasifikasi Decission Tree}
+        \label{penanda}
+    \end{figure}
+
+    \item Klasifikasi SVM dengan menggunakan dataset yang sama
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=8cm,height=2cm]{figures/Cp3-16.png}
+              \caption{Klasifikasi SVM}
+              \label{penanda}
+          \end{figure}
 \end{enumerate}
 
-\section{Presentasi Tugas}
-Pada pertemuan ketiga ini, diadakan tiga penilaiain yaitu penilaian untuk tugas mingguan seperti sebelumnya dengan nilai maksimal 100. Kemudian dalam satu minggu kedepan maksimal sebelum waktu mata kuliah kecerdasan buatan. Ada presentasi tugas bab ini dan bab sebelumnya dengan nilai presentasi yang terpisah masing-masing 100. Jadi ada tiga komponen penilaiain pada pertemuan ini yaitu :
+\section{Program Cross Validation}
+Berikut merupakan output dari percobaan Program Cross Validation yang telah dilakukan :
 \begin{enumerate}
-	\item tugas minggu hari ini dan besok (maks 100). pada chapter ini
-	\item presentasi decission tree (maks 100). Mempraktekkan kode python dan menjelaskan cara kerjanya.
-	\item presentasi Random Forest (maks 100).Mempraktekkan kode python dan menjelaskan cara kerjanya.
+    \item tugas minggu hari ini dan besok (maks 100). pada chapter ini
+    \item presentasi decission tree (maks 100). Mempraktekkan kode python dan menjelaskan cara kerjanya.
+    \item presentasi Random Forest (maks 100).Mempraktekkan kode python dan menjelaskan cara kerjanya.
+    \item Hasil Cross Validation untuk Random forest
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=14cm,height=2cm]{figures/Cp3-17.png}
+              \caption{Hasil Cross Validation Random Forest}
+              \label{penanda}
+          \end{figure}
+    \item Hasil Cross Validation untuk Decission Tree
+          \begin{figure}[!htbp]
+              \centering
+              \includegraphics[width=14cm,height=1cm]{figures/Cp3-18.png}
+              \caption{Hasil Cross Validation Decission Tree}
+              \label{penanda}
+          \end{figure}
+    \item Hasil Cross Validation untuk SVM
+          \begin{figure}
+              \centering
+              \includegraphics[width=14cm,height=1cm]{figures/Cp3-19.png}
+              \caption{Hasil Cross Validation SVM}
+              \label{penanda}
+          \end{figure}
 \end{enumerate}
-Waktu presentasi pada jam kerja di IRC. Kriteria penilaian presentasi sangat sederhana, jika presenter tidak bisa menjawab pertanyaan asisten maka nilai nol. Jika semua pertanyaan bisa dijawab maka nilai 100. Presentasi bisa diulang apabila nilai nol sampai bisa mendapatkan nilai 100 dalam waktu satu minggu kedepan.
 
-
+\section{Program Pengamatan Komponen Informasi}
+Berikut merupakan output dari percobaan Program Pengamatan Komponen Informasi yang telah dilakukan :
+\begin{enumerate}
+    \item Ouput berikut dapat mengetahui banyaknya tree yang dibuat, berapa atribut yang digunakan dan informasi lainnya.
+          \begin{figure}
+              \centering
+              \includegraphics[width=11cm,height=5cm]{figures/Cp3-20.png}
+              \caption{Hasil plotting komponen}
+              \label{penanda}
+          \end{figure}
+    \item Output berikut merupakan hasil plotting komponen informasi agar dapat dibaca
+          \begin{figure}
+              \centering
+              \includegraphics[width=8cm,height=9cm]{figures/Cp3-21.png}
+              \caption{Hasil plotting komponen}
+              \label{penanda}
+          \end{figure}
+\end{enumerate}
