@@ -4,17 +4,17 @@ Untuk pratikum saati ini menggunakan buku \textit{Python Artificial Intelligence
 Kode program ada di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners .
 Tujuan pembelajaran pada pertemuan pertama antara lain:
 \begin{enumerate}
-\item
-Mengerti implementasi klasifikasi dan teknik evaluasi
-\item
-Memprediksi spesies burung dengan random forest
-\item
-Memahami Confusion Matrix.
+    \item
+          Mengerti implementasi klasifikasi dan teknik evaluasi
+    \item
+          Memprediksi spesies burung dengan random forest
+    \item
+          Memahami Confusion Matrix.
 \end{enumerate}
 Tugas dengan cara dikumpulkan dengan pull request ke github dengan menggunakan latex pada repo yang dibuat oleh asisten riset. Kode program menggunakan input listing ditaruh di folder src ekstensi .py dan dipanggil ke latex dengan input listings. Tulisan dan kode tidak boleh plagiat, menggunakan bahasa indonesia yang sesuai dengan gaya bahasa buku teks.
 
 \section{Teori}
-Random Forest adalah hasil voting dari beberapa decission tree yang masing-masing memegang atribut yang berbeda. Jadi setiap decission tree spesifik terhadap atribut tersebut yang merupakan bagian kecil dari keseluruhan atribut di data set. Hindari RF jika atribut terlalu sedikit untuk membentuk beberapa tree. Pada praktek kali ini mengggunakan dataset spesies burung yang diambil dari situs 
+Random Forest adalah hasil voting dari beberapa decission tree yang masing-masing memegang atribut yang berbeda. Jadi setiap decission tree spesifik terhadap atribut tersebut yang merupakan bagian kecil dari keseluruhan atribut di data set. Hindari RF jika atribut terlalu sedikit untuk membentuk beberapa tree. Pada praktek kali ini mengggunakan dataset spesies burung yang diambil dari situs
 (http://www.vision.caltech.edu/visipedia/CUB-200-2011.html). Didalamnya terdapat 12.000 foto dari 200 spesies yang berbeda. Yang akan kita pakai untuk RF hanya atribut dari burunynya saja seperti ukuran, bentuk dan warna. Data tersebut diberi label secara manual oleh manusia dengan memanfaatkan jasa dari Amazon's Mechanical Turk.
 
 \subsection{Random Forest}
@@ -49,7 +49,7 @@ imgatt2.shape
 \end{lstlisting}
 
 
-Sekarang kita akan meload jawabannya yang berisi apakah burung itu termasuk dalam spesies yang mana. Dua kolomnya adalah imgid dan label. Dan melakukan pivot yang mana imgid menjadi index yang artinya unik perintahnya ada di listing \ref{lst:3.6}. Lalu kita cek kembali datanya. 
+Sekarang kita akan meload jawabannya yang berisi apakah burung itu termasuk dalam spesies yang mana. Dua kolomnya adalah imgid dan label. Dan melakukan pivot yang mana imgid menjadi index yang artinya unik perintahnya ada di listing \ref{lst:3.6}. Lalu kita cek kembali datanya.
 \begin{lstlisting}[caption=membaca dataset label file txt,label={lst:3.6}]
 imglabels = pd.read_csv("data/CUB_200_2011/image_class_labels.txt", 
                         sep=' ', header=None, names=['imgid', 'label'])
@@ -160,7 +160,7 @@ def plot_confusion_matrix(cm, classes,
 
 \end{lstlisting}
 
- Agar plot sumbunya sesuai dengan nama datanya maka kita set dengan perintah
+Agar plot sumbunya sesuai dengan nama datanya maka kita set dengan perintah
 \begin{lstlisting}[caption=Membaca file classes.txt,label={lst:3.17}]
 birds = pd.read_csv("data/CUB_200_2011/classes.txt",
                     sep='\s+', header=None, usecols=[1], names=['birdname'])
@@ -181,7 +181,7 @@ plt.show()
 
 
 \subsection{Mencoba dengan metode Decission Tree dan SVM}
-Kita coba menggunakan Decission tree 
+Kita coba menggunakan Decission tree
 \begin{lstlisting}[caption=Mencoba klasifikasi dengan decission tree dengan dataset yang sama,label={lst:3.19}]
 from sklearn import tree
 clftree = tree.DecisionTreeClassifier()
@@ -261,32 +261,107 @@ plt.show()
 \section{Soal Teori}
 Praktek teori penunjang yang dikerjakan(nilai 5 per nomor, untuk hari pertama) :
 \begin{enumerate}
-\item
-Jelaskan apa itu random forest, sertakan gambar ilustrasi buatan sendiri.
-\item
-Jelaskan cara membaca dataset kasus dan artikan makna setiap file dan isi field masing masing file.
-\item
-Jelaskan apa itu cross validation
-\item
-Jelaskan apa arti score 44\% pada random forest, 27\% pada decission tree dan 29\%dari SVM.
-\item
-Jelaskan bagaimana cara membaca confusion matriks dan contohnya memakai gambar atau ilustrasi sendiri.
-\item
-Jelaskan apa itu voting pada random forest disertai dengan ilustrasi gambar sendiri.
+    \item
+          Jelaskan apa itu random forest, sertakan gambar ilustrasi buatan sendiri.
+    \item
+          Jelaskan cara membaca dataset kasus dan artikan makna setiap file dan isi field masing masing file.
+    \item
+          Jelaskan apa itu cross validation
+    \item
+          Jelaskan apa arti score 44\% pada random forest, 27\% pada decission tree dan 29\%dari SVM.
+    \item
+          Jelaskan bagaimana cara membaca confusion matriks dan contohnya memakai gambar atau ilustrasi sendiri.
+    \item
+          Jelaskan apa itu voting pada random forest disertai dengan ilustrasi gambar sendiri.
 \end{enumerate}
 
 \section{Praktek Program}
 Tugas anda adalah,praktekkan dan jelaskan dengan menggunakan bahasa yang mudah dimengerti dan bebas plagiat dan wajib skrinsut dari komputer sendiri masing masing nomor di bawah ini(nilai 5 masing masing pada hari kedua).
 
 \begin{enumerate}
-\item buat aplikasi sederhana menggunakan pandas dan jelaskan arti setiap baris kode yang dibuat(harus beda dengan teman sekelas)
-\item buat aplikasi sederhana menggunakan numpy dan jelaskan arti dari setiap baris kode yang dibuat(harus beda dengan teman sekelas)
-\item buat aplikasi sederhana menggunakan matplotlib dan jelaskan arti dari setiap baris kode(harus beda dengan teman sekelas)
-\item jalankan program klasifikasi Random Fores pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program confusion matrix pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program klasifikasi SVM dan Decission Tree pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program cross validaiton pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program pengamatan komponen informasi pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+    \item buat aplikasi sederhana menggunakan pandas dan jelaskan arti setiap baris kode yang dibuat(harus beda dengan teman sekelas)
+          \begin{figure}[ht]
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-1.png}}
+              \caption{Aplikasi Pandas - Chapter3}
+              \label{Aplikasi Pandas - Chapter3}
+          \end{figure}
+
+    \item buat aplikasi sederhana menggunakan numpy dan jelaskan arti dari setiap baris kode yang dibuat(harus beda dengan teman sekelas)
+          \begin{figure}[ht]
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-2.png}}
+              \caption{Aplikasi Numpy - Chapter3}
+              \label{Aplikasi Numpy - Chapter3}
+          \end{figure}
+
+    \item buat aplikasi sederhana menggunakan matplotlib dan jelaskan arti dari setiap baris kode(harus beda dengan teman sekelas)
+          \begin{figure}[ht]
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-3.png}}
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-3a.png}}
+              \caption{Aplikasi Matplotlib - Chapter3}
+              \label{Aplikasi Matplotlib - Chapter3}
+          \end{figure}
+
+    \item jalankan program klasifikasi Random Fores pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+          \begin{figure}[ht]
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4.png}}
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4a.png}}
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4b.png}}
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4c.png}}
+          \end{figure}
+          \newpage
+          \begin{figure}[ht]
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4d.png}}
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4e.png}}
+          \end{figure}
+          \newpage
+          \begin{figure}[ht]
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4f.png}}
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4g.png}}
+          \end{figure}
+          \newpage
+          \begin{figure}[ht]
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4h.png}}
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-4i.png}}
+              \caption{Klasifikasi Random Fores - Chapter3}
+              \label{Klasifikasi Random Fores - Chapter3}
+          \end{figure}
+          \newpage
+
+    \item jalankan program confusion matrix pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+          \begin{figure}[ht]
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-5.png}}
+              \centerline{\includegraphics[scale=0.7]{figures/chapter3-5a.png}}
+              \centerline{\includegraphics[scale=1.3]{figures/chapter3-5b.png}}
+              \caption{Confusion Matrix - Chapter3}
+              \label{Confusion Matrix - Chapter3}
+          \end{figure}
+          \newpage
+
+    \item jalankan program klasifikasi SVM dan Decission Tree pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+    \begin{figure}[ht]
+        \centerline{\includegraphics[scale=0.7]{figures/chapter3-6.png}}
+        \centerline{\includegraphics[scale=0.7]{figures/chapter3-6a.png}}
+        \caption{Klasifikasi SVM - Chapter3}
+        \label{Klasifikasi SVM - Chapter3}
+    \end{figure}
+
+    \item jalankan program cross validaiton pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+    \begin{figure}[ht]
+        \centerline{\includegraphics[scale=0.7]{figures/chapter3-7.png}}
+        \centerline{\includegraphics[scale=0.7]{figures/chapter3-7a.png}}
+        \centerline{\includegraphics[scale=0.7]{figures/chapter3-7b.png}}
+        \caption{Cross Validaiton - Chapter3}
+        \label{Cross Validaiton - Chapter3}
+    \end{figure}
+    \newpage
+
+    \item jalankan program pengamatan komponen informasi pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+    \begin{figure}[ht]
+        \centerline{\includegraphics[scale=0.7]{figures/chapter3-8.png}}
+        \centerline{\includegraphics[scale=1.3]{figures/chapter3-8a.png}}
+        \caption{Komponen Informasi - Chapter3}
+        \label{Komponen Informasi - Chapter3}
+    \end{figure}
 \end{enumerate}
 
 
@@ -294,17 +369,17 @@ Tugas anda adalah,praktekkan dan jelaskan dengan menggunakan bahasa yang mudah d
 Dari percobaan yang dilakukan di atas, error yang kita dapatkan di dokumentasikan dan di selesaikan(nilai 5 per error yang ditangani. Untuk hari kedua):
 
 \begin{enumerate}
-	\item skrinsut error
-	\item Tuliskan kode eror dan jenis errornya
-	\item Solusi pemecahan masalah error tersebut
+    \item skrinsut error
+    \item Tuliskan kode eror dan jenis errornya
+    \item Solusi pemecahan masalah error tersebut
 \end{enumerate}
 
 \section{Presentasi Tugas}
 Pada pertemuan ketiga ini, diadakan tiga penilaiain yaitu penilaian untuk tugas mingguan seperti sebelumnya dengan nilai maksimal 100. Kemudian dalam satu minggu kedepan maksimal sebelum waktu mata kuliah kecerdasan buatan. Ada presentasi tugas bab ini dan bab sebelumnya dengan nilai presentasi yang terpisah masing-masing 100. Jadi ada tiga komponen penilaiain pada pertemuan ini yaitu :
 \begin{enumerate}
-	\item tugas minggu hari ini dan besok (maks 100). pada chapter ini
-	\item presentasi decission tree (maks 100). Mempraktekkan kode python dan menjelaskan cara kerjanya.
-	\item presentasi Random Forest (maks 100).Mempraktekkan kode python dan menjelaskan cara kerjanya.
+    \item tugas minggu hari ini dan besok (maks 100). pada chapter ini
+    \item presentasi decission tree (maks 100). Mempraktekkan kode python dan menjelaskan cara kerjanya.
+    \item presentasi Random Forest (maks 100).Mempraktekkan kode python dan menjelaskan cara kerjanya.
 \end{enumerate}
 Waktu presentasi pada jam kerja di IRC. Kriteria penilaian presentasi sangat sederhana, jika presenter tidak bisa menjawab pertanyaan asisten maka nilai nol. Jika semua pertanyaan bisa dijawab maka nilai 100. Presentasi bisa diulang apabila nilai nol sampai bisa mendapatkan nilai 100 dalam waktu satu minggu kedepan.
 
