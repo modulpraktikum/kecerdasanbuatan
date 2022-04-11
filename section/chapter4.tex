@@ -4,12 +4,12 @@ Untuk pratikum saati ini menggunakan buku \textit{Python Artificial Intelligence
 Kode program ada di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners .
 Tujuan pembelajaran pada pertemuan pertama antara lain:
 \begin{enumerate}
-\item
-Mengerti implementasi klasifikasi pada teks
-\item
-Mengerti teknik machine learning
-\item
-Memahami Bag of Words
+	\item
+	      Mengerti implementasi klasifikasi pada teks
+	\item
+	      Mengerti teknik machine learning
+	\item
+	      Memahami Bag of Words
 \end{enumerate}
 
 Tugas dengan cara dikumpulkan dengan pull request ke github dengan menggunakan latex pada repo yang dibuat oleh asisten riset. Kode program menggunakan input listing ditaruh di folder src ekstensi .py dan dipanggil ke latex dengan input listings. Tulisan dan kode tidak boleh plagiat, menggunakan bahasa indonesia yang sesuai dengan gaya bahasa buku teks.
@@ -44,7 +44,7 @@ daptarkata=vectorizer.get_feature_names()
 \end{lstlisting}
 
 
-Lakukan pengocokan data sehingga data terlihat random, perintahnya ada di listing \ref{lst:4.6}. Lalu kita cek kembali datanya pada variabel dshuf. 
+Lakukan pengocokan data sehingga data terlihat random, perintahnya ada di listing \ref{lst:4.6}. Lalu kita cek kembali datanya pada variabel dshuf.
 \begin{lstlisting}[caption=Mengocok Data Frame,label={lst:4.6}]
 dshuf = d.sample(frac=1)
 \end{lstlisting}
@@ -123,18 +123,18 @@ skoresd=scores.std()
 \section{Soal Teori}
 Praktek teori penunjang yang dikerjakan(nilai 5 per nomor, untuk hari pertama) :
 \begin{enumerate}
-\item
-Jelaskan apa itu klasifikasi teks, sertakan gambar ilustrasi buatan sendiri.
-\item
-Jelaskan mengapa klasifikasi bunga tidak bisa menggunakan machine learning, sertakan ilustrasi sendiri.
-\item
-Jelaskan bagaimana teknik pembelajaran mesin pada teks pada kata-kata yang digunakan di youtube,jelaskan arti per atribut data csv dan sertakan ilustrasi buatan sendiri.
-\item
-Jelaskan apa yang dimaksud vektorisasi data.
-\item
-Jelaskan apa itu bag of words dengan kata-kata yang sederhana dan ilustrasi sendiri.
-\item
-Jelaskan apa itu TF-IDF, ilustrasikan dengan gambar sendiri.
+	\item
+	      Jelaskan apa itu klasifikasi teks, sertakan gambar ilustrasi buatan sendiri.
+	\item
+	      Jelaskan mengapa klasifikasi bunga tidak bisa menggunakan machine learning, sertakan ilustrasi sendiri.
+	\item
+	      Jelaskan bagaimana teknik pembelajaran mesin pada teks pada kata-kata yang digunakan di youtube,jelaskan arti per atribut data csv dan sertakan ilustrasi buatan sendiri.
+	\item
+	      Jelaskan apa yang dimaksud vektorisasi data.
+	\item
+	      Jelaskan apa itu bag of words dengan kata-kata yang sederhana dan ilustrasi sendiri.
+	\item
+	      Jelaskan apa itu TF-IDF, ilustrasikan dengan gambar sendiri.
 \end{enumerate}
 
 
@@ -143,14 +143,80 @@ Jelaskan apa itu TF-IDF, ilustrasikan dengan gambar sendiri.
 Tugas anda adalah,praktekkan dan jelaskan dengan menggunakan bahasa yang mudah dimengerti dan bebas plagiat dan wajib skrinsut dari komputer sendiri masing masing nomor di bawah ini(nilai 5 masing masing pada hari kedua).
 
 \begin{enumerate}
-\item buat aplikasi sederhana menggunakan pandas, buat data dummy format csv sebanyak 500 baris dan melakukan load ke dataframe panda.jelaskan arti setiap baris kode yang dibuat(harus beda dengan teman sekelas)
-\item dari dataframe tersebut dipecah menjadi dua dataframe yaitu 450 row pertama dan 50 row sisanya(harus beda dengan teman sekelas)
-\item pratekkan vektorisasi dan klasifikasi dari data (NPM mod 4, jika 0 maka katty perry, 1 LMFAO, 2 Eminem, 3 Shakira) dengan Decission Tree. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item Cobalah klasifikasikan dari data vektorisasi yang di tentukan di nomor sebelumnya dengan klasifikasi SVM. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item Cobalah klasifikasikan dari data vektorisasi yang di tentukan di nomor sebelumnya dengan klasifikasi Decission Tree. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item Plotlah confusion matrix dari praktek modul ini menggunakan matplotlib.Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program cross validaiton pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item Buatlah program pengamatan komponen informasi pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+	\item buat aplikasi sederhana menggunakan pandas, buat data dummy format csv sebanyak 500 baris dan melakukan load ke dataframe panda.jelaskan arti setiap baris kode yang dibuat(harus beda dengan teman sekelas)
+	      \begin{figure}[ht]
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-1.png}}
+		      \caption{Aplikasi Pandas - Chapter4}
+		      \label{Aplikasi Pandas - Chapter4}
+	      \end{figure}
+	      \newpage
+
+	\item dari dataframe tersebut dipecah menjadi dua dataframe yaitu 450 row pertama dan 50 row sisanya(harus beda dengan teman sekelas)
+	      \begin{figure}[ht]
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-2.png}}
+		      \caption{Dataframe dipecah menjadi dua - Chapter4}
+		      \label{Dataframe dipecah menjadi dua- Chapter4}
+	      \end{figure}
+	      \newpage
+
+	\item pratekkan vektorisasi dan klasifikasi dari data (NPM mod 4, jika 0 maka katty perry, 1 LMFAO, 2 Eminem, 3 Shakira) dengan Decission Tree. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+	      \begin{figure}[ht]
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-3.png}}
+		      \caption{Vektorisasi dan Klasifikasi 1194018 = mod 2 - Chapter4}
+		      \label{Vektorisasi dan Klasifikasi 1194018 = mod 2 - Chapter4}
+	      \end{figure}
+
+	\item Cobalah klasifikasikan dari data vektorisasi yang di tentukan di nomor sebelumnya dengan klasifikasi SVM. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+	      \begin{figure}[ht]
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-4.png}}
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-4a.png}}
+	      \end{figure}
+	      \newpage
+	      \begin{figure}[ht]
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-4b.png}}
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-4c.png}}
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-4d.png}}
+	      \end{figure}
+	      \newpage
+	      \begin{figure}[ht]
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-4e.png}}
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-4f.png}}
+		      \caption{Vektorisasi dan Klasifikasi - Chapter4}
+		      \label{Vektorisasi dan Klasifikasi- Chapter4}
+	      \end{figure}
+
+	\item Cobalah klasifikasikan dari data vektorisasi yang di tentukan di nomor sebelumnya dengan klasifikasi Decission Tree. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+	      \begin{figure}[ht]
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-5.png}}
+		      \caption{Vektorisasi dan Klasifikasi Decission Tree - Chapter4}
+		      \label{Vektorisasi dan Klasifikasi Decission Tree - Chapter4}
+	      \end{figure}
+
+	\item Plotlah confusion matrix dari praktek modul ini menggunakan matplotlib.Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+	      \begin{figure}[ht]
+		      \centerline{\includegraphics[scale=0.7]{figures/chappter4-6.png}}
+		      \caption{Confusion Matrix - Chapter4}
+		      \label{Confusion Matrix - Chapter4}
+	      \end{figure}
+
+	\item jalankan program cross validaiton pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+	\newpage
+	\begin{figure}[ht]
+		\centerline{\includegraphics[scale=0.7]{figures/chappter4-7.png}}
+		\centerline{\includegraphics[scale=0.7]{figures/chappter4-7a.png}}
+		\centerline{\includegraphics[scale=0.7]{figures/chappter4-7b.png}}
+		\centerline{\includegraphics[scale=0.7]{figures/chappter4-7c.png}}
+		\caption{Cross Validaiton - Chapter4}
+		\label{Cross Validaiton - Chapter4}
+	\end{figure}
+
+	\item Buatlah program pengamatan komponen informasi pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
+	\begin{figure}[ht]
+		\centerline{\includegraphics[scale=0.7]{figures/chappter4-8.png}}
+		\centerline{\includegraphics[scale=0.7]{figures/chappter4-8a.png}}
+		\caption{Komponen Informasi - Chapter4}
+		\label{Komponen Informasi - Chapter4}
+	\end{figure}
 \end{enumerate}
 
 
