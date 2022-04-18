@@ -1,175 +1,159 @@
 \chapter{Klasifikasi Teks}
 
-Untuk pratikum saati ini menggunakan buku \textit{Python Artificial Intelligence Projects for Beginners}\cite{eckroth2018python}. Dengan praktek menggunakan python 3 dan editor anaconda dan library python scikit-learn.
-Kode program ada di https://github.com/PacktPublishing/Python-Artificial-Intelligence-Projects-for-Beginners .
-Tujuan pembelajaran pada pertemuan pertama antara lain:
-\begin{enumerate}
-\item
-Mengerti implementasi klasifikasi pada teks
-\item
-Mengerti teknik machine learning
-\item
-Memahami Bag of Words
-\end{enumerate}
+\section{Klasifikasi Teks}
+Merupakan suatu cara dalam memilah milah data teks berdasarkan pada parameter dengan data yang bersifat dokumen ataupun teks yang memiliki kumpulan teks didalamnya, Untuk tipe data teks sendiri yaitu bertipe data char dan string yang mudah untuk diolah
 
-Tugas dengan cara dikumpulkan dengan pull request ke github dengan menggunakan latex pada repo yang dibuat oleh asisten riset. Kode program menggunakan input listing ditaruh di folder src ekstensi .py dan dipanggil ke latex dengan input listings. Tulisan dan kode tidak boleh plagiat, menggunakan bahasa indonesia yang sesuai dengan gaya bahasa buku teks.
+\section{Klasifikasi bunga tidak dapat menggunakan machine learning}
+Karena memiliki masalah input yang sama namun keluarannya berbeda (output), jika terjadi error pada inputan maka disebut dengan ‘noise’. Noise sendiri merupakan suatu output yang disimpan/ditangkap maupun direkap bukan seperti seharusnya (keluaran yang diinginkan).
 
-\section{Teori}
-Menggunakan teknik bag-of-words pada klasifikasi berbasis text dan kata untuk mengklasifikasikan komentar yang ada di internet sebagai spam atau bukan. Atau bisa juga untuk melakukan identifikasi sebuah review apakah positive atau negatif.
+\section{Teknik pembelajaran mesin pada teks pada kata-kata yang digunakan di youtube }
+Pada saat menggunakan Youtube terdapat Machine Learning yang bekerja dan memproses perintah
+ataupun aktivitas tersebut, dimana akan memfilter secara otomatis video yang disesuaikan
+dengan "keyword" yang kita masukkan sehingga memberikan keluaran video dengan keyword yang benar. Adapula fitur yang didapatkan ketika sedang menonton youtube. Pada tampilan sebelah kanan terdapat pilihan 'Next' ataupun 'Suggestion' yang menampilkan video serupa sesuai dengan kita cari atau sedang di tonton.
 
+\section{Vektorisasi Data}
+Vektorisasi data adalah proses normalisasi data teks dengan pemberian nilai terhadap setiap fitur. Pada penelitian ini digunakan teknik TF-IDF untuk pemberian bobot fitur. Teknik ini akan menghitung nilai Term Frequency (TF) dan Inverse Document Frequency (IDF) pada setiap fitur di setiap dokumen dalam korpus
 
-\subsection{Vektorisasi data}
-Pertama kita lakukan vektorisasi dari dataset. Lankah pertama kita baca terlebih dahulu dengan perintah \ref{lst:4.0}.
-\begin{lstlisting}[caption=Membaca data file txt,label={lst:4.0}]
-import pandas as pd
-d = pd.read_csv("Youtube01-Psy.csv")
-\end{lstlisting}
+\section{Bag-of-words}
+Bag-of-words merupakan suatu representasi penyederhanaan yang digunakan dalam suatu pemrosesan Bahasa alami dan dapat mengambil informasi. Model bag-of-words sederhana untuk dipahami dan diterapkan dan juga dapat diandalkan dalam menangani masalah pemodelan Bahasa dan klasifikasi dokumen. Pada model ini, tiap kalimat dalam dokumen digambarkan sebagai token
 
-Memanggil library vektorisasi dari sci-kit lern, dengan menggunakan listing \ref{lst:4.1}.
-
-\begin{lstlisting}[caption=Instansiasi Vektorizer,label={lst:4.1}]
-from sklearn.feature_extraction.text import CountVectorizer
-vectorizer = CountVectorizer()
-\end{lstlisting}
-
-Memilih kolom CONTENT dari dataframe d untuk di vektorisasi kemudian menampungnya pada variabel dvec menggunakan listing \ref{lst:4.2}.
-\begin{lstlisting}[caption=Vektorisasi data dari atribut CONTENT,label={lst:4.2}]
-dvec = vectorizer.fit_transform(d['CONTENT'])
-dvec
-\end{lstlisting}
-
-Melihat daftar kata yang di vektorisasi. lalu kita simpan isinya pada variabel daptarkata dengan menggunakan perintah pada listing \ref{lst:4.3}.
-\begin{lstlisting}[caption=Mendapatkan Daftar Kata,label={lst:4.3}]
-daptarkata=vectorizer.get_feature_names()
-\end{lstlisting}
+\section{TFIDF}
+tf–idf, TF*IDF, atau TFIDF adalah ukuran statistik yang menggambarkan pentingnya suatu istilah terhadap sebuah dokumen dalam sebuah kumpulan atau korpus. Ukuran ini sering dipakai sebagai faktor pembobot dalam pencarian temu balik informasi, penambangan teks, dan pemodelan pengguna.
 
 
-Lakukan pengocokan data sehingga data terlihat random, perintahnya ada di listing \ref{lst:4.6}. Lalu kita cek kembali datanya pada variabel dshuf. 
-\begin{lstlisting}[caption=Mengocok Data Frame,label={lst:4.6}]
-dshuf = d.sample(frac=1)
-\end{lstlisting}
+\section{Praktikum}
+\subsection{Aplikasi Sederhana Menggunakan Pandas}
+\begin{figure}[!htbp]
+	\centering
 
-kemudian kita melakukan pemisahan antara data set untuk training dan test dengan perintah di listing \ref{lst:4.7}.
-\begin{lstlisting}[caption=Memisahkan data frame,label={lst:4.7}]
-d_train=dshuf[:300]
-d_test=dshuf[300:]
-\end{lstlisting}
+	\includegraphics[width=10cm,height=4cm]{figures/Cp4-1.png}
+	\caption{Aplikasi sederhana menggunakan pandas}
+	\label{penanda}
+\end{figure}
+\textbf{Penjelasan Code Aplikasi Sederhana pandas perbaris :}
+\begin{itemize}
+	\item Langkah awal yaitu di line Pertama merupakan langkah mengimport library pandas kemudian di inisialisasi menjadi pd
+	\item Untuk bagian Variable data di definisikan data data untuk kolom nama, kolom npm dan kolom angkatan
+	\item Lalu membuat variabel dengan nama data dan mengisinya dengan data dummy yang sudah dibuat
+	\item Selanjutnya dilihat 5 baris pertama dan banyaknya baris data
+\end{itemize}
 
-Kita lakukan training perintah listing \ref{lst:4.8}.
-\begin{lstlisting}[caption=Training pada vektorisasi atau yang disebut transform dan fit,label={lst:4.8}]
-d_train_att=vectorizer.fit_transform(d_train['CONTENT'])
-d_train_att
-\end{lstlisting}
+\subsection{Praktek dataframe tersebut dipecah menjadi dua dataframe yaitu 450 row pertama dan 50 row sisanya}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=10cm,height=2cm]{figures/Cp4-2.png}
+	\caption{Vektorisasi dan Klasifikasi data}
+	\label{penanda}
+\end{figure}
+\textbf{Penjelasan Code hasil pemecahan data perbaris :}
+\begin{itemize}
+	\item Membuat 2 buah data frame yang pertama 450 data dan yang kedua 50 data
+	\item data tersebut terdapat data training dan data testing
+\end{itemize}
 
-Lalu kita lakukan transformasi saja tanpa training pada data testing dengan perintah listing \ref{lst:4.9}.
-\begin{lstlisting}[caption=Transform tanpa fit dari data testing,label={lst:4.9}]
-d_test_att=vectorizer.transform(d_test['CONTENT'])
-d_test_att
-\end{lstlisting}
+\subsection{vektorisasi dan klasifikasi dari data (NPM mod 4, jika 0 maka katty
+	perry, 1 LMFAO, 2 Eminem, 3 Shakira) dengan Decission Tree}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=6cm,height=6cm]{figures/Cp4-3.png}
+	\caption{Vektorisasi dan Klasifikasi data}
+	\label{penanda}
+\end{figure}
+\textbf{Penjelasan Code Aplikasi Sederhana numpy perbaris :}
+\begin{itemize}
+	\item Baris Pertama Yaitu import library pandas kemudian di inisialisasi menjadi pd
+	\item Melakukan fungsi bag of word dengan cara menghitung semua kata
+	\item Melakukan bag of word pada dataframe pada colom CONTENT
+	\item Melihat isi vektorisasi
+	\item Menampilkan isi data pada baris ke 300
+	\item Mengambil apa saja nama kolom yang tersedia
+	\item Melakukan randomisasi agar hasil sempurna pada klasifikasi
+	\item Membuat data training dan testing
+	\item melakukan training pada data training dan di vektorisasi
+	\item melakukan testing pada data testing dan di vektorisasi
+	\item Dimana akan mengambil label span dan bukan spam
+\end{itemize}
 
-Pengambilan label klasifikasi spam dari kolom CLASS dengan perintah listing \ref{lst:4.10}.
-\begin{lstlisting}[caption=Pengambilan label dari data testing dan training,label={lst:4.10}]
-d_train_label=d_train['CLASS']
-d_test_label=d_test['CLASS']
-\end{lstlisting}
+\subsection{klasifikasikan dari data vektorisasi dengan klasifikasi SVM}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=6cm,height=6cm]{figures/Cp4-4.png}
+	\caption{Vektorisasi dan Klasifikasi data dengan klasifikasi SVM}
+	\label{penanda}
+\end{figure}
+\textbf{Penjelasan Code klasifikasikan dari data vektorisasi dengan klasifikasi SVM perbaris :}
+\begin{itemize}
+	\item Baris Pertama Yaitu import library svm dari sklear
+	\item membuat variabel clfsvm berisikan method svc
+	\item pada variabel tersebut diberikan method fit dengan isian data train vektorisasi dan data training label
+\end{itemize}
 
+\subsection{klasifikasikan dari data vektorisasi dengan klasifikasi Decission Tree}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=6cm,height=6cm]{figures/Cp4-5.png}
+	\caption{Vektorisasi dan Klasifikasi data dengan klasifikasi Decission Tree}
+	\label{penanda}
+\end{figure}
+\textbf{Penjelasan Code klasifikasikan dari data vektorisasi dengan klasifikasi Decission Tree perbaris :}
+\begin{itemize}
+	\item Baris Pertama Yaitu import library tree dari sklearn
+\end{itemize}
 
+\subsection{Plot confusion matrix menggunakan matplotlib}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=6cm,height=6cm]{figures/Cp4-6.png}
+	\caption{Plot confusion matrix menggunakan matplotlib}
+	\label{penanda}
+\end{figure}
+\textbf{Penjelasan Code Plot confusion matrix menggunakan matplotlib perbaris :}
+\begin{itemize}
+	\item Baris Pertama Yaitu import library confusion matrix dari sklearn metrics
+	\item lalu dipanggil lagi cm yaitu confusion matrix yang didalamnya ada dktest label dan pred labels
+\end{itemize}
 
-\subsection{Klasifikasi dengan Random Forest}
-Setelah lakukan vektorisasi. Kita panggil kelas RandomForestClassifier. dengan n estimators sebanyak 80 yang artinya kita akan membuat 80 tree dengan tanpa batasan pengambilan atribut atau kolom dengan perintah listing \ref{lst:4.11}.
-\begin{lstlisting}[caption=Instansiasi kelas Random Forest,label={lst:4.11}]
-from sklearn.ensemble import RandomForestClassifier
-clf=RandomForestClassifier(n_estimators=80)
-\end{lstlisting}
+\subsection{Program Cross Validation}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=6cm,height=6cm]{figures/Cp4-7.png}
+	\caption{Program Cross Validation}
+	\label{penanda}
+\end{figure}
+\textbf{Penjelasan Program Cross Validation perbaris :}
+\begin{itemize}
+	\item Baris Pertama Yaitu import library cross val score dari sklearn model selection
+	\item Lalu menampilkan hasil dari scores
+	\item Selanjutnya menampilkan hasil dari scores tree
+	\item Dan terakhir itu menampilkan hasil dari scoressvm
+\end{itemize}
 
+\subsection{Program Pengamatan Komponen Informasi}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=6cm,height=6cm]{figures/Cp4-8.png}
+	\caption{Program Pengamatan Komponen Informasi}
+	\label{penanda}
+\end{figure}
+\textbf{Penjelasan Program Pengamatan Komponen Informasi perbaris :}
+\begin{itemize}
+	\item Baris Pertama Yaitu import numpy yang diinisialisasikan menjadi np
+	\item import library RandomForestClassifier dari sklearn ensemble
+\end{itemize}
 
-Kemudian lakukan fit untuk membangun random forest yang sudah ditentukan dengan banyak tree sebanyak 80 dengan perintah listing \ref{lst:4.12}.
-\begin{lstlisting}[caption=Fitting random forest dengan dataset training,label={lst:4.12}]
-clf.fit(d_train_att,d_train_label)
-\end{lstlisting}
-
-
-Hasilnya bisa kita lakukan prediksi dari data testing dengan perintah listing \ref{lst:4.13}.
-\begin{lstlisting}[caption=Melihat Hasil prediksi,label={lst:4.13}]
-clf.predict(d_test_att)
-\end{lstlisting}
-
-Untuk besaran skornya dengan perintah listing \ref{lst:4.14}
-\begin{lstlisting}[caption=Score perolehan dari klasifikasi,label={lst:4.14}]
-clf.score(d_test_att,d_test_label)
-\end{lstlisting}
-
-\subsection{Confusion Matrix}
-Dari RF kita coba petakan ke dalam Confusion Matrix dan lihat hasilnya dengan perintah listing \ref{lst:4.15}.
-\begin{lstlisting}[caption=Membuat Confusion Matrix,label={lst:4.15}]
-from sklearn.metrics import confusion_matrix
-pred_labels = clf.predict(d_test_att)
-cm=confusion_matrix(d_test_label, pred_labels)
-\end{lstlisting}
-
-
-
-\subsection{Pengecekan Cross Validation}
-Pengeceken Cross Validation untuk random forest dengan perintah \ref{lst:4.21}.
-\begin{lstlisting}[caption=Hasil Cross Validation random forest,label={lst:4.21}]
-from sklearn.model_selection import cross_val_score
-scores = cross_val_score(clf,d_train_att,d_train_label,cv=5)
-
-skorrata2=scores.mean()
-skoresd=scores.std()
-\end{lstlisting}
-
-
-\section{Soal Teori}
-Praktek teori penunjang yang dikerjakan(nilai 5 per nomor, untuk hari pertama) :
-\begin{enumerate}
-\item
-Jelaskan apa itu klasifikasi teks, sertakan gambar ilustrasi buatan sendiri.
-\item
-Jelaskan mengapa klasifikasi bunga tidak bisa menggunakan machine learning, sertakan ilustrasi sendiri.
-\item
-Jelaskan bagaimana teknik pembelajaran mesin pada teks pada kata-kata yang digunakan di youtube,jelaskan arti per atribut data csv dan sertakan ilustrasi buatan sendiri.
-\item
-Jelaskan apa yang dimaksud vektorisasi data.
-\item
-Jelaskan apa itu bag of words dengan kata-kata yang sederhana dan ilustrasi sendiri.
-\item
-Jelaskan apa itu TF-IDF, ilustrasikan dengan gambar sendiri.
-\end{enumerate}
-
-
-
-\section{Praktek Program}
-Tugas anda adalah,praktekkan dan jelaskan dengan menggunakan bahasa yang mudah dimengerti dan bebas plagiat dan wajib skrinsut dari komputer sendiri masing masing nomor di bawah ini(nilai 5 masing masing pada hari kedua).
-
-\begin{enumerate}
-\item buat aplikasi sederhana menggunakan pandas, buat data dummy format csv sebanyak 500 baris dan melakukan load ke dataframe panda.jelaskan arti setiap baris kode yang dibuat(harus beda dengan teman sekelas)
-\item dari dataframe tersebut dipecah menjadi dua dataframe yaitu 450 row pertama dan 50 row sisanya(harus beda dengan teman sekelas)
-\item pratekkan vektorisasi dan klasifikasi dari data (NPM mod 4, jika 0 maka katty perry, 1 LMFAO, 2 Eminem, 3 Shakira) dengan Decission Tree. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item Cobalah klasifikasikan dari data vektorisasi yang di tentukan di nomor sebelumnya dengan klasifikasi SVM. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item Cobalah klasifikasikan dari data vektorisasi yang di tentukan di nomor sebelumnya dengan klasifikasi Decission Tree. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item Plotlah confusion matrix dari praktek modul ini menggunakan matplotlib.Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item jalankan program cross validaiton pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\item Buatlah program pengamatan komponen informasi pada bagian teori bab ini. Tunjukkan keluarannya dari komputer sendiri dan artikan maksud setiap luaran yang didapatkan.
-\end{enumerate}
-
-
-\section{Penanganan Error}
-Dari praktek pemrograman yang dilakukan di modul ini, error yang kita dapatkan(hasil komputer sendiri) di dokumentasikan dan di selesaikan(nilai 5 per error yang ditangani. Untuk hari kedua):
-
-\begin{enumerate}
-	\item skrinsut error
-	\item Tuliskan kode eror dan jenis errornya
-	\item Solusi pemecahan masalah error tersebut
-\end{enumerate}
-
-\section{Presentasi Tugas}
-Pada pertemuan ketiga ini, diadakan tiga penilaiain yaitu penilaian untuk tugas mingguan seperti sebelumnya dengan nilai maksimal 100. Kemudian dalam satu minggu kedepan maksimal sebelum waktu mata kuliah kecerdasan buatan. Ada presentasi kematerian dengan nilai presentasi yang terpisah masing-masing 100. Jadi ada tiga komponen penilaiain pada pertemuan ini yaitu :
-\begin{enumerate}
-	\item tugas minggu hari ini dan besok (maks 100). pada chapter ini
-	\item presentasi Vektorisasi (maks 100). Mempraktekkan kode python dan menjelaskan cara kerjanya.
-	\item presentasi cara kerja Data Frame di Pandas (maks 100).Mempraktekkan kode python dan menjelaskan cara kerjanya.
-\end{enumerate}
-Waktu presentasi pada jam kerja di IRC. Kriteria penilaian presentasi sangat sederhana, presenter akan ditanyai 20 pertanyaan tentang pemahamannya menggunakan python untuk kecerdasan buatan. jika presenter tidak bisa menjawab satu pertanyaan asisten maka nilai nol. Jika semua pertanyaan bisa dijawab maka nilai 100. Presentasi bisa diulang apabila gagal, sampai bisa mendapatkan nilai 100 dalam waktu satu minggu kedepan.
-
-
+\subsection{Gambar Hasil Akhir}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=6cm,height=6cm]{figures/Cp4-9.png}
+	\caption{Gambar Hasil akhir chapter 4}
+	\label{penanda}
+\end{figure}
+\textbf{Penjelasan Gambar Hasil akhir chapter 4 perbaris :}
+\begin{itemize}
+	\item Baris Pertama Yaitu import matplotlib pyplot yang diinisialisasikan menjadi plt
+	\item import library Axes3D dari mpl toolkits mplot3d
+	\item import cm dari matplotlib
+	\item lalu disesuaikan ukuran dan juga letak (posisi) untuk gambarnya nanti. 
+	\item Selanjutnya atur bagian posisi xyz
+	\item lalu show (menampilkan gambar)
+\end{itemize}
